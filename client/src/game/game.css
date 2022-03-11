@@ -19,30 +19,6 @@
   padding-top: 20px;
 }
 
-.square {
-  background: rgb(224, 191, 191);
-  border: 1.5px solid #999;
-  float: left;
-  font-size: 65px;
-  font-weight: normal;
-  line-height: 34px;
-  height: 70px;
-  width: 70px;
-  margin-right: -1px;
-  margin-top: -1px;
-  padding: 0;
-  text-align: center;
-}
-
-.square:focus {
-  outline: none;
-  background: rgb(247, 193, 112);
-}
-
-.square:hover {
-  background: rgb(129, 203, 252);
-}
-
 .kbd-navigation .square:focus {
   background: #ddd;
 }

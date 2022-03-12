@@ -1,5 +1,5 @@
 .square {
-  background: rgb(224, 191, 191);
+  background: rgb(248, 244, 244);
   border: 1.5px solid #999;
   float: left;
   font-size: 65px;
@@ -20,4 +20,15 @@
 
 .square:hover {
   background: rgb(129, 203, 252);
+}
+
+.board-row:after {
+  clear: both;
+  content: "";
+  display: table;
+  min-width: 100px;
+}
+
+.game-board {
+  padding-top: 20px;
 }

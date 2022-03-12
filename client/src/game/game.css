@@ -1,27 +1,18 @@
 .toggle-button {
-  min-width: 39px;
-  max-height: 21.5px;
+  font-size: 25px;
+  min-width: 73px;
+  height: 35px;
   padding-left: 12px;
   padding-right: 12px;
-}
-.board-row:after {
-  clear: both;
-  content: "";
-  display: table;
-  min-width: 100px;
 }
 
 .status {
   margin-bottom: 10px;
 }
 
-.game-board {
-  padding-top: 20px;
-}
-
-.kbd-navigation .square:focus {
-  background: #ddd;
-}
+/* .kbd-navigation .square:focus {
+  background: rgb(182, 6, 6);
+} */
 
 .game {
   display: flex;
@@ -37,4 +28,15 @@
   font-weight: bold;
   text-align: center;
   margin-left: 20px;
+  font-size: 35px;
+}
+
+.game-numbers {
+  font-size: 25px;
+  font-weight: bold;
+}
+.game-moves,
+.game-restart {
+  font-size: 25px;
+  height: 35px;
 }

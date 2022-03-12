@@ -36,15 +36,6 @@ function calculateStillWin(squares) {
 class Game extends Component {
   constructor(props) {
     super(props);
-    state = { users: [] };
-  }
-
-  componentDidMount() {
-    fetch("/users")
-      .then((res) => res.json())
-      .then((users) => this.setState({ users }));
-  }
-  /*
     this.state = {
       history: [
         {
@@ -56,7 +47,6 @@ class Game extends Component {
       toggleState: true,
     };
   }
-*/
 
   handleClick(i, h) {
     const history = this.state.history.slice(0, this.state.stepNumber + 1);

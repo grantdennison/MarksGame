@@ -1,37 +1,11 @@
-import React, { Component } from "react";
+import React, { useState, useEffect, Component } from "react";
+import socketIOClient from "socket.io-client";
 import "./game.css";
+import {calculateWinner, calculateStillWin} from "./calWinner";
 import Board from "../board/board";
 
+const ENDPOINT = "http://localhost:4001/";
 // check if there is a winner
-function calculateWinner(squares) {
-  const lines = [
-    [0, 1, 2],
-    [3, 4, 5],
-    [6, 7, 8],
-    [0, 3, 6],
-    [1, 4, 7],
-    [2, 5, 8],
-    [0, 4, 8],
-    [2, 4, 6],
-  ];
-  for (let i = 0; i < lines.length; i++) {
-    const [a, b, c] = lines[i];
-    if (squares[a] && squares[a] === squares[b] && squares[a] === squares[c]) {
-      return lines[i];
-    }
-  }
-  return null;
-}
-
-//Check if its still possible to win
-function calculateStillWin(squares) {
-  let xWinner = squares.map((i) => (i === null ? `X` : i));
-  let oWinner = squares.map((i) => (i === null ? `O` : i));
-  if (calculateWinner(xWinner) || calculateWinner(oWinner)) {
-    return true;
-  }
-  return false;
-}
 
 class Game extends Component {
   constructor(props) {

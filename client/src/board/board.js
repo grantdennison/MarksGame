@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React from "react";
 import "./board.css";
 
 function Square(props) {
@@ -13,38 +13,34 @@ function Square(props) {
   );
 }
 
-class Board extends Component {
-  renderSquare(i, h) {
+export default function Board(props) {
+  const renderSquare = (i, h) => {
     return (
       <Square
-        value={this.props.squares[i]}
-        onClick={() => this.props.onClick(i, h)}
-        winner={this.props.winner.includes(i) ? true : false}
+        value={props.squares[i]}
+        onClick={() => props.onClick(i, h)}
+        winner={props.winner.includes(i) ? true : false}
       />
     );
-  }
+  };
 
-  render() {
-    return (
-      <div className="board-con">
-        <div className="board-row">
-          {this.renderSquare(0, `(1, 1)`)}
-          {this.renderSquare(1, `(2, 1)`)}
-          {this.renderSquare(2, `(3, 1)`)}
-        </div>
-        <div className="board-row">
-          {this.renderSquare(3, `(1, 2)`)}
-          {this.renderSquare(4, `(2, 2)`)}
-          {this.renderSquare(5, `(3, 2)`)}
-        </div>
-        <div className="board-row">
-          {this.renderSquare(6, `(1, 3)`)}
-          {this.renderSquare(7, `(2, 3)`)}
-          {this.renderSquare(8, `(3, 3)`)}
-        </div>
+  return (
+    <div className="board-con">
+      <div className="board-row">
+        {renderSquare(0, `(1, 1)`)}
+        {renderSquare(1, `(2, 1)`)}
+        {renderSquare(2, `(3, 1)`)}
       </div>
-    );
-  }
+      <div className="board-row">
+        {renderSquare(3, `(1, 2)`)}
+        {renderSquare(4, `(2, 2)`)}
+        {renderSquare(5, `(3, 2)`)}
+      </div>
+      <div className="board-row">
+        {renderSquare(6, `(1, 3)`)}
+        {renderSquare(7, `(2, 3)`)}
+        {renderSquare(8, `(3, 3)`)}
+      </div>
+    </div>
+  );
 }
-
-export default Board;

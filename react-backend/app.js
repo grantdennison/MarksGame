@@ -1,41 +1,54 @@
-var createError = require('http-errors');
-var express = require('express');
-var path = require('path');
-var cookieParser = require('cookie-parser');
-var logger = require('morgan');
+const express = require("express");
+const http = require("http");
+const socketIo = require("socket.io");
 
-var indexRouter = require('./routes/index');
-var usersRouter = require('./routes/users');
+const port = process.env.PORT || 3001;
+const index = require("./routes/index");
 
-var app = express();
+const app = express();
+// const cors = require("cors"); // not required by look of it
+app.use(index);
+const server = http.createServer(app);
 
-// view engine setup
-app.set('views', path.join(__dirname, 'views'));
-app.set('view engine', 'jade');
-
-app.use(logger('dev'));
-app.use(express.json());
-app.use(express.urlencoded({ extended: false }));
-app.use(cookieParser());
-app.use(express.static(path.join(__dirname, 'public')));
-
-app.use('/', indexRouter);
-app.use('/users', usersRouter);
-
-// catch 404 and forward to error handler
-app.use(function(req, res, next) {
-  next(createError(404));
+const io = socketIo(server, {
+  cors: {
+    origin: "http://localhost:3000",
+    methods: ["GET", "POST"],
+  },
 });
 
-// error handler
-app.use(function(err, req, res, next) {
-  // set locals, only providing error in development
-  res.locals.message = err.message;
-  res.locals.error = req.app.get('env') === 'development' ? err : {};
+let countAll = 0;
+let interval;
 
-  // render the error page
-  res.status(err.status || 500);
-  res.render('error');
+io.on("connection", (socket) => {
+  socket.join("Grants room"); //specify room
+  if (interval) {
+    clearInterval(interval);
+  }
+  interval = setInterval(() => getApiAndEmit(socket), 1000);
+  console.log(`New client connected ${interval}`);
+  // console.log(socket.rooms);
+  // console.log(socket.id); //socket id
+  socket.on("PushCount", (count) => {
+    globalCount(count);
+  });
+  io.emit("GlobalCount", countAll);
+
+  socket.on("disconnect", () => {
+    console.log(`Client disconnected ${interval}`);
+    // clearInterval(interval);
+  });
 });
 
-module.exports = app;
+const globalCount = (count = 0) => {
+  countAll += count;
+  io.emit("GlobalCount", countAll);
+};
+
+const getApiAndEmit = (socket) => {
+  const response = new Date();
+  // Emitting a new message. Will be consumed by the client
+  io.emit("FromAPI", response);
+};
+
+server.listen(port, () => console.log(`Listening on port ${port}`));

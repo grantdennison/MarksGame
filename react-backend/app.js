@@ -1,16 +1,16 @@
-const express = require("express");
-const http = require("http");
-const socketIo = require("socket.io");
-const index = require("./routes/index");
+import express from "express";
+import { createServer } from "http";
+import { Server } from "socket.io";
+import index from "./routes/index.js";
 const port = process.env.PORT || 4001;
-let gameData = require("./routes/gameData");
-let users = require("./routes/users");
+import { gameData } from "./routes/gameData.js";
+// import users from "./routes/users.js";
 const app = express();
 // const cors = require("cors"); // not required by look of it
 app.use(index);
-const server = http.createServer(app);
+const server = createServer(app);
 
-const io = socketIo(server, {
+const io = new Server(server, {
   cors: {
     origin: "http://localhost:3000",
     methods: ["GET", "POST"],

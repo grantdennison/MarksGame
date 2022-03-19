@@ -14,11 +14,11 @@ function Square(props) {
 }
 
 export default function Board(props) {
-  const renderSquare = (i, h) => {
+  const renderSquare = (i) => {
     return (
       <Square
         value={props.squares[i]}
-        onClick={() => props.onClick(i, h)}
+        onClick={() => props.onClick(i)}
         winner={props.winner.includes(i) ? true : false}
       />
     );
@@ -27,19 +27,19 @@ export default function Board(props) {
   return (
     <div className="board-con">
       <div className="board-row">
-        {renderSquare(0, `(1, 1)`)}
-        {renderSquare(1, `(2, 1)`)}
-        {renderSquare(2, `(3, 1)`)}
+        {renderSquare(0)}
+        {renderSquare(1)}
+        {renderSquare(2)}
       </div>
       <div className="board-row">
-        {renderSquare(3, `(1, 2)`)}
-        {renderSquare(4, `(2, 2)`)}
-        {renderSquare(5, `(3, 2)`)}
+        {renderSquare(3)}
+        {renderSquare(4)}
+        {renderSquare(5)}
       </div>
       <div className="board-row">
-        {renderSquare(6, `(1, 3)`)}
-        {renderSquare(7, `(2, 3)`)}
-        {renderSquare(8, `(3, 3)`)}
+        {renderSquare(6)}
+        {renderSquare(7)}
+        {renderSquare(8)}
       </div>
     </div>
   );

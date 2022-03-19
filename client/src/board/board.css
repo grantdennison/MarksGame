@@ -31,4 +31,5 @@
 
 .game-board {
   padding-top: 20px;
+  min-width: 210px;
 }

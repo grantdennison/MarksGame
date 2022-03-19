@@ -1,0 +1,17 @@
+.login-welcome {
+  font-size: 60px;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  margin-top: -2px;
+  margin-bottom: -2px;
+}
+
+.login-login {
+  margin-bottom: -2px;
+  font-size: 30px;
+  font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif;
+}
+
+.login-sheet {
+  font-size: 20px;
+  font-weight: bold;
+}

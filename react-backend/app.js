@@ -4,6 +4,7 @@ const socketIo = require("socket.io");
 const index = require("./routes/index");
 const port = process.env.PORT || 4001;
 let gameData = require("./routes/gameData");
+let users = require("./routes/users");
 const app = express();
 // const cors = require("cors"); // not required by look of it
 app.use(index);

@@ -10,15 +10,17 @@ export default function Game(props) {
   const [name, setName] = useState("");
   const [password, setPassword] = useState("");
   const [create, setCreate] = useState(false);
-  const [users, setUsers] = useState([`Grant`, `Sam`, `Danny`]);
+  const [users, setUsers] = useState([`Grant`, `Nicole`, `Simon`]);
   useEffect(() => {
-    socket.on("GameData", (data) => {
-      //   setValues(data);
-      //   console.log(data);
+    socket.on("UserLogin", (data) => {
+      setUsers(data);
     });
   }, []);
 
   const handleSubmit = (e) => {
+    if (!users.includes(name)) alert(`User does not exist`);
+    if (password === "") alert(`Password cannot be blank`);
+
     console.log(`Submit ${name} and ${password}`);
 
     setName("");

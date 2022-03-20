@@ -1,4 +1,4 @@
-import React, { useCallback } from "react";
+import React from "react";
 
 export default function UserList(props) {
   const users = props.users;

@@ -1,32 +1,76 @@
 import React, { useState, useEffect } from "react";
-import socketIOClient from "socket.io-client";
 import UserList from "./users";
 import "./login.css";
+import { socket } from "../index";
 
-const ENDPOINT = "http://localhost:4001/";
-const socket = socketIOClient(ENDPOINT);
-
-export default function Game(props) {
+export default function Login(props) {
   const [name, setName] = useState("");
   const [password, setPassword] = useState("");
   const [create, setCreate] = useState(false);
-  const [users, setUsers] = useState([`Grant`, `Nicole`, `Simon`]);
+  const [loginPage, setLoginPage] = useState(true);
+  const [users, setUsers] = useState([`Grant`, `Nicole`]);
+
   useEffect(() => {
-    socket.on("UserLogin", (data) => {
+    socket.on("CurrentUsers", (data) => {
       setUsers(data);
     });
   }, []);
 
+  ////Handle username text box
+  const handleChange = (e) => {
+    if (e && e.slice(-1) === ` `) {
+      alert(`No spaces allowed`);
+    } else if (e) {
+      setName(e[0].toUpperCase() + e.slice(1).toLowerCase());
+    } else {
+      setName(e);
+    }
+    console.log(`capital ${name}`);
+  };
+  ///handle password text box
+  const handleChangePassword = (e) => {
+    if (e && e.slice(-1) === ` `) {
+      alert(`No spaces allowed`);
+    } else if (e.length > 6) {
+    } else {
+      setPassword(e);
+    }
+  };
+
+  /// Submit button
   const handleSubmit = (e) => {
-    if (!users.includes(name)) alert(`User does not exist`);
-    if (password === "") alert(`Password cannot be blank`);
+    if (!users.includes(name) && !create) alert(`User does not exist`);
+    else if (password.length < 4)
+      alert(`Password must be 4 characters or more!`);
+    else if (name.length < 4) alert(`Username must be 4 characters or more!`);
+    else if (create && users.includes(name)) alert(`User name already taken`);
+    ///////creat new user
+    else if (create) {
+      let obj = {};
+      obj[name] = password;
+      socket.emit("UpdateUsers", obj);
+    }
+    ///login user
+    else {
+      let obj = {};
+      obj[name] = password;
+      socket.emit("LoginUsers", obj, function (res) {
+        console.log(res);
+        if (res === true) {
+          setLoginPage(false);
+        } else {
+          alert(
+            res === 0
+              ? `Your account is locked please contact Admin`
+              : `Password incorrect Please Try Again:
+                Number of guesses left = ${res}`
+          );
+        }
+      });
+    }
 
-    console.log(`Submit ${name} and ${password}`);
-
-    setName("");
-    setPassword("");
-
-    // socket.emit("UpdateData", updateData);
+    // setName("");
+    // setPassword("");
   };
 
   const createUser = () => {
@@ -35,12 +79,10 @@ export default function Game(props) {
     setCreate(true);
   };
 
-  let userLogin = true;
-
   return (
     <div
       className="login-sheet"
-      style={{ display: userLogin ? "visible" : "none" }}
+      style={{ display: loginPage ? "visible" : "none" }}
     >
       <h1 className="login-welcome">Welcome to TicTacToe</h1>
       <h2 className="login-login">
@@ -54,12 +96,12 @@ export default function Game(props) {
         <input
           placeholder="username"
           value={name}
-          onChange={(e) => setName(e.target.value)}
+          onChange={(e) => handleChange(e.target.value)}
         />
         <input
           placeholder="password"
           value={password}
-          onChange={(e) => setPassword(e.target.value)}
+          onChange={(e) => handleChangePassword(e.target.value)}
         />
         <button onClick={() => handleSubmit()}>
           {create ? "Create" : "Submit"}

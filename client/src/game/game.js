@@ -1,11 +1,9 @@
 import React, { useState, useEffect } from "react";
-import socketIOClient from "socket.io-client";
 import "./game.css";
 import { calculateWinner, calculateStillWin } from "./calWinner";
 import Board from "../board/board";
+import { socket } from "../index";
 
-const ENDPOINT = "http://localhost:4001/";
-const socket = socketIOClient(ENDPOINT);
 // let gameData = {};
 // check if there is a winner
 

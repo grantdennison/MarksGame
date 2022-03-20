@@ -4,7 +4,7 @@ import { Server } from "socket.io";
 import index from "./routes/index.js";
 const port = process.env.PORT || 4001;
 import { gameData } from "./routes/gameData.js";
-import { users, createUser, userLogin } from "./routes/users.js";
+import { users, createUser, userLogin } from "./routes/usersFunctions.js";
 const app = express();
 // const cors = require("cors"); // not required by look of it
 app.use(index);
@@ -30,7 +30,7 @@ io.on("connection", (socket) => {
 
   ///Add user and password
   socket.on("UpdateUsers", (data) => {
-    createUser(data);
+    createUser(data, socket.id);
     io.emit("CurrentUsers", users);
   });
   ///Current users

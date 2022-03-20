@@ -60,7 +60,7 @@ export default function Login(props) {
           setLoginPage(false);
         } else {
           alert(
-            res === 0
+            res <= 0
               ? `Your account is locked please contact Admin`
               : `Password incorrect Please Try Again:
                 Number of guesses left = ${res}`

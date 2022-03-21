@@ -9,6 +9,7 @@ import {
   userLogin,
   usersLoggedOn,
   SocketClosed,
+  loggedOff,
 } from "./routes/usersFunctions.js";
 const app = express();
 // const cors = require("cors"); // not required by look of it
@@ -54,6 +55,12 @@ io.on("connection", (socket) => {
     if (res === true) loggedOn();
     callback(res);
   });
+
+  ///Log out current user
+  socket.on('LogoutUser', function (data){
+    loggedOff(data)
+    loggedOn()
+  })
 
   socket.on("disconnect", () => {
     SocketClosed(socket.id);

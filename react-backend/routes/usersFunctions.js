@@ -52,10 +52,17 @@ export function usersLoggedOn() {
   return [offlineUsers, activeUsers];
 }
 
+// User closed page or refreshed
 export function SocketClosed(id) {
   Object.keys(usersData).forEach((e) => {
     if (usersData[e].id === id) {
       usersData[e].active = false;
     }
   });
+}
+
+//// User logged off
+export function loggedOff(user) {
+  usersData[user].id = ``;
+  usersData[user].active = false;
 }

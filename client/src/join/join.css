@@ -1,3 +1,7 @@
+.join-sheet-off {
+  display: none;
+}
+
 .join-welcome {
   font-size: 50px;
   font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
@@ -22,13 +26,39 @@
   margin: 10px;
   border-radius: 30px;
 }
-/* .container .off-line-users {
-  position: relative;
-  float: right;
-  width: 150px;
-  min-height: 150px;
-  border: 10px solid black;
+
+.offline-button {
+  background-color: rgb(238, 168, 146);
+  margin: 3px;
   padding: 10px;
-  margin: 20px;
-  border-radius: 30px;
-} */
+  font-weight: bold;
+  border-radius: 12px;
+}
+
+.online-button {
+  background-color: rgb(244, 248, 248);
+  margin: 3px;
+  padding: 10px;
+  font-weight: bold;
+  border-radius: 12px;
+}
+
+.online-button:hover {
+  background-color: aquamarine;
+  padding: 12px;
+  margin: 1px;
+}
+
+.logoff-button {
+  background-color: rgb(125, 137, 241);
+  margin: 3px;
+  padding: 10px;
+  font-weight: bold;
+  border-radius: 12px;
+}
+
+.logoff-button:hover {
+  background-color: rgb(238, 145, 145);
+  padding: 12px;
+  margin: 1px;
+}

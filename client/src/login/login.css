@@ -11,7 +11,12 @@
   font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif;
 }
 
-.login-sheet {
+.login-sheet-on {
+  font-size: 20px;
+  font-weight: bold;
+}
+.login-sheet-off {
+  display: none;
   font-size: 20px;
   font-weight: bold;
 }

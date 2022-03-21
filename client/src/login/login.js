@@ -7,17 +7,24 @@ export default function Login(props) {
   const [name, setName] = useState("");
   const [password, setPassword] = useState("");
   const [create, setCreate] = useState(false);
-  const [loginPage, setLoginPage] = useState(true);
+  const [loginPage, setLoginPage] = useState("on");
   const [users, setUsers] = useState([`Grant`, `Nicole`]);
   const [online, setOnline] = useState([]);
 
   useEffect(() => {
     socket.on("LoggedOn", (offAct) => {
-      console.log(offAct);
+      let logged = false;
       let offlineUsers = offAct[0];
       let onlineUsers = offAct[1];
+
       setUsers(Object.keys(offlineUsers));
       setOnline(Object.keys(onlineUsers));
+      Object.keys(onlineUsers).forEach((e) => {
+        if (onlineUsers[e].id === socket.id) {
+          logged = true;
+        }
+      });
+      logged ? setLoginPage("off") : setLoginPage("on");
     });
   }, []);
 
@@ -62,9 +69,7 @@ export default function Login(props) {
       let obj = {};
       obj[name] = password;
       socket.emit("LoginUsers", obj, function (res) {
-        console.log(res);
         if (res === true) {
-          setLoginPage(false);
           setName("");
           setPassword("");
         } else {
@@ -87,8 +92,8 @@ export default function Login(props) {
 
   return (
     <div
-      className="login-sheet"
-      style={{ display: loginPage ? "visible" : "none" }}
+      className={`login-sheet-${loginPage}`}
+      // style={{ display: loginPage ? "visible" : "none" }}
     >
       <h1 className="login-welcome">Welcome to TicTacToe</h1>
       <h2 className="login-login">

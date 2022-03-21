@@ -1,10 +1,21 @@
 import React, { useState, useEffect } from "react";
 import { socket } from "../index";
 import "./join.css";
-import { OfflineUsers, OnlineUsers } from "./userStatus";
+import { OfflineUsers, OnlineUsers, usersLoggedOn } from "./userStatus";
 
 export default function Join(props) {
-  const [joinPage, setJoinPage] = useState(false);
+  const [joinPage, setJoinPage] = useState(true);
+  const [users, setUsers] = useState([]);
+  const [online, setOnline] = useState([]);
+
+  useEffect(() => {
+    socket.on("LoggedOn", (offAct) => {
+      let offlineUsers = offAct[0];
+      let onlineUsers = offAct[1];
+      setUsers(Object.keys(offlineUsers));
+      setOnline(Object.keys(onlineUsers));
+    });
+  }, []);
 
   return (
     <div

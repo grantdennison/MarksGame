@@ -1,3 +1,4 @@
+// import { socket } from "../../client/src/index.js";
 import { usersData } from "./usersData.js";
 
 export let users = Object.keys(usersData);
@@ -18,31 +19,43 @@ export function createUser(data, id) {
 //Login users
 export function userLogin(data, id) {
   let user = Object.keys(data);
-  console.log(user);
-  console.log(data[user]);
-  console.log(usersData[user].password);
-
   if (
     data[user] === usersData[user].password &&
     usersData[user].loginAttempts > 0
   ) {
     usersData[user].loginAttempts = 3;
+    usersData[user].active = true;
+    usersData[user].id = id;
+
     return true;
   } else {
     usersData[user].loginAttempts--;
     return usersData[user].loginAttempts;
   }
+}
 
-  // if (logins <= 0) {
-  //   return 0;
-  // } else if (data[user] === passwords[user]) {
-  //   logins = 3;
-  //   return true;
-  // } else if (logins) <= 1) {
-  //   loginAttempts[user]--;
-  //   return 0;
-  // } else {
-  //   loginAttempts[user]--;
-  //   return loginAttempts[user];
-  // }
+////Users currently logged on
+export function usersLoggedOn() {
+  let activeUsers = {};
+  let offlineUsers = {};
+  Object.keys(usersData).forEach((e) => {
+    if (usersData[e].active) {
+      activeUsers[e] = {
+        id: usersData[e].id,
+      };
+    } else {
+      offlineUsers[e] = {
+        id: usersData[e].id,
+      };
+    }
+  });
+  return [offlineUsers, activeUsers];
+}
+
+export function SocketClosed(id) {
+  Object.keys(usersData).forEach((e) => {
+    if (usersData[e].id === id) {
+      usersData[e].active = false;
+    }
+  });
 }

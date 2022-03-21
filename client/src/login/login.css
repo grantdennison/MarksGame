@@ -15,3 +15,6 @@
   font-size: 20px;
   font-weight: bold;
 }
+.user-buttons:hover {
+  background-color: rgb(155, 212, 155);
+}

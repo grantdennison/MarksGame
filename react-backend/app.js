@@ -4,7 +4,12 @@ import { Server } from "socket.io";
 import index from "./routes/index.js";
 const port = process.env.PORT || 4001;
 import { gameData } from "./routes/gameData.js";
-import { users, createUser, userLogin } from "./routes/usersFunctions.js";
+import {
+  createUser,
+  userLogin,
+  usersLoggedOn,
+  SocketClosed,
+} from "./routes/usersFunctions.js";
 const app = express();
 // const cors = require("cors"); // not required by look of it
 app.use(index);
@@ -17,12 +22,19 @@ const io = new Server(server, {
   },
 });
 
+// ///Send all user account names
+// const updateCurrentUser = () => io.emit("CurrentUsers", users);
+
+/// Send all logged on users
+const loggedOn = () => io.emit("LoggedOn", usersLoggedOn());
+
 io.on("connection", (socket) => {
-  // socket.join("Grants room"); //specify room
-  // console.log({ gameData });
   console.log(`New client connected`);
+  // socket.join("Grants room"); //specify room
   // console.log(socket.rooms);
   // console.log(socket.id); //socket id
+
+  ///Game data update
   socket.on("UpdateData", (data) => {
     gameData = data;
     io.emit("GameData", gameData);
@@ -31,18 +43,21 @@ io.on("connection", (socket) => {
   ///Add user and password
   socket.on("UpdateUsers", (data) => {
     createUser(data, socket.id);
-    io.emit("CurrentUsers", users);
+    loggedOn();
   });
   ///Current users
-  io.emit("CurrentUsers", users);
+  loggedOn();
 
   /// CHeck password and login
   socket.on("LoginUsers", function (data, callback) {
     let res = userLogin(data, socket.id);
+    if (res === true) loggedOn();
     callback(res);
   });
 
   socket.on("disconnect", () => {
+    SocketClosed(socket.id);
+    loggedOn();
     console.log(`Client disconnected ${port}`);
     // clearInterval(interval);
   });

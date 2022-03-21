@@ -9,10 +9,15 @@ export default function Login(props) {
   const [create, setCreate] = useState(false);
   const [loginPage, setLoginPage] = useState(true);
   const [users, setUsers] = useState([`Grant`, `Nicole`]);
+  const [online, setOnline] = useState([]);
 
   useEffect(() => {
-    socket.on("CurrentUsers", (data) => {
-      setUsers(data);
+    socket.on("LoggedOn", (offAct) => {
+      console.log(offAct);
+      let offlineUsers = offAct[0];
+      let onlineUsers = offAct[1];
+      setUsers(Object.keys(offlineUsers));
+      setOnline(Object.keys(onlineUsers));
     });
   }, []);
 
@@ -39,7 +44,9 @@ export default function Login(props) {
 
   /// Submit button
   const handleSubmit = (e) => {
-    if (!users.includes(name) && !create) alert(`User does not exist`);
+    if (online.includes(name)) {
+      alert(`Already logged in on another page`);
+    } else if (!users.includes(name) && !create) alert(`User does not exist`);
     else if (password.length < 4)
       alert(`Password must be 4 characters or more!`);
     else if (name.length < 4) alert(`Username must be 4 characters or more!`);
@@ -58,6 +65,8 @@ export default function Login(props) {
         console.log(res);
         if (res === true) {
           setLoginPage(false);
+          setName("");
+          setPassword("");
         } else {
           alert(
             res <= 0
@@ -68,9 +77,6 @@ export default function Login(props) {
         }
       });
     }
-
-    // setName("");
-    // setPassword("");
   };
 
   const createUser = () => {
@@ -90,7 +96,12 @@ export default function Login(props) {
       </h2>
       <p>Select Current User:</p>
       <div>
-        <UserList users={users} setName={setName} setCreate={setCreate} />
+        <UserList
+          users={users}
+          online={online}
+          setName={setName}
+          setCreate={setCreate}
+        />
       </div>
       <div className="login-form">
         <input

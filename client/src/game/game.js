@@ -4,12 +4,6 @@ import { calculateWinner, calculateStillWin } from "./calWinner";
 import Board from "../board/board";
 import { socket } from "../index";
 
-// let gameData = {};
-// check if there is a winner
-
-// socket.on("GameData", (data) => {
-//   gameData = data;
-// });
 export default function Game(props) {
   const [form, setValues] = useState({
     history: [
@@ -30,15 +24,15 @@ export default function Game(props) {
     });
   }, []);
 
+  /// handle click event
   const handleClick = (i) => {
     console.log(form);
     console.log(`lll`);
-    // const history = form.history.slice(0, form.stepNumber + 1);
-    // console.log(`history`, history);
     const current = form.history[form.history.length - 1];
     const squares = current.squares.slice();
     const draw = calculateStillWin(current.squares);
 
+    /// calculate if winner
     if (calculateWinner(squares) || squares[i] || !draw) {
       return;
     }

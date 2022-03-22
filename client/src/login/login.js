@@ -17,7 +17,7 @@ export default function Login(props) {
       let offlineUsers = offAct[0];
       let onlineUsers = offAct[1];
 
-      setUsers(Object.keys(offlineUsers));
+      setUsers(offlineUsers);
       setOnline(Object.keys(onlineUsers));
       Object.keys(onlineUsers).forEach((e) => {
         if (onlineUsers[e].id === socket.id) {

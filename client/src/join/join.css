@@ -35,7 +35,7 @@
   border-radius: 12px;
 }
 
-.online-button {
+.online-button-none {
   background-color: rgb(244, 248, 248);
   margin: 3px;
   padding: 10px;
@@ -43,10 +43,19 @@
   border-radius: 12px;
 }
 
-.online-button:hover {
+.online-button-none:hover {
   background-color: aquamarine;
   padding: 12px;
   margin: 1px;
+}
+
+.online-button-room {
+  background-color: rgb(236, 162, 128);
+  color: rgb(100, 84, 70);
+  margin: 3px;
+  padding: 10px;
+  font-weight: bold;
+  border-radius: 12px;
 }
 
 .logoff-button {

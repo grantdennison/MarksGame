@@ -10,6 +10,7 @@ import {
   usersLoggedOn,
   SocketClosed,
   loggedOff,
+  createRoom,
 } from "./routes/usersFunctions.js";
 const app = express();
 // const cors = require("cors"); // not required by look of it
@@ -22,9 +23,6 @@ const io = new Server(server, {
     methods: ["GET", "POST"],
   },
 });
-
-// ///Send all user account names
-// const updateCurrentUser = () => io.emit("CurrentUsers", users);
 
 /// Send all logged on users
 const loggedOn = () => io.emit("LoggedOn", usersLoggedOn());
@@ -56,11 +54,17 @@ io.on("connection", (socket) => {
     callback(res);
   });
 
+  ///add users to a room
+  socket.on("SetRoom", function (users) {
+    createRoom(users);
+    loggedOn();
+  });
+
   ///Log out current user
-  socket.on('LogoutUser', function (data){
-    loggedOff(data)
-    loggedOn()
-  })
+  socket.on("LogoutUser", function (data) {
+    loggedOff(data);
+    loggedOn();
+  });
 
   socket.on("disconnect", () => {
     SocketClosed(socket.id);

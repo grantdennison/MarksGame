@@ -11,7 +11,7 @@ export function createUser(data, id) {
     active: true,
     password: data[user],
     loginAttempts: 3,
-    room: ``,
+    room: false,
   };
   users = Object.keys(usersData);
 }
@@ -37,16 +37,15 @@ export function userLogin(data, id) {
 ////Users currently logged on
 export function usersLoggedOn() {
   let activeUsers = {};
-  let offlineUsers = {};
+  let offlineUsers = [];
   Object.keys(usersData).forEach((e) => {
     if (usersData[e].active) {
       activeUsers[e] = {
         id: usersData[e].id,
+        room: usersData[e].room,
       };
     } else {
-      offlineUsers[e] = {
-        id: usersData[e].id,
-      };
+      offlineUsers.push(e);
     }
   });
   return [offlineUsers, activeUsers];
@@ -57,6 +56,7 @@ export function SocketClosed(id) {
   Object.keys(usersData).forEach((e) => {
     if (usersData[e].id === id) {
       usersData[e].active = false;
+      deleteRoom(e);
     }
   });
 }
@@ -65,4 +65,24 @@ export function SocketClosed(id) {
 export function loggedOff(user) {
   usersData[user].id = ``;
   usersData[user].active = false;
+  deleteRoom(user);
 }
+
+/////reate roo
+export function createRoom(users) {
+  let room = users[0];
+  users.map((e) => {
+    usersData[e].room = room;
+  });
+}
+
+////delete room
+const deleteRoom = (user) => {
+  let curRoom = usersData[user].room;
+  Object.keys(usersData).map((e) => {
+    if (usersData[e].room === curRoom) {
+      usersData[e].room = false;
+    }
+  });
+  usersData[user].room = false;
+};

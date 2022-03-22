@@ -1,3 +1,5 @@
+import { usersData } from "./usersData.js";
+
 export const gameData = {
   history: [
     {

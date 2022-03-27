@@ -48,17 +48,6 @@ export default function Game(props) {
       gameDisplay: true,
     };
     socket.emit("UpdateData", updateData);
-    // setValues({
-    //   ...form,
-    //   history: history.concat([
-    //     {
-    //       squares: squares,
-    //       colRow: colRow,
-    //     },
-    //   ]),
-    //   stepNumber: history.length,
-    //   xIsNext: !form.xIsNext,
-    // });
   };
 
   const history = form.history;

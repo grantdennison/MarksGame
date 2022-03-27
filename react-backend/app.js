@@ -36,7 +36,6 @@ io.on("connection", (socket) => {
 
   ///Game data update
   socket.on("UpdateData", (data) => {
-    console.log(socket.rooms);
     updateGamesData(data, socket.rooms);
     Object.keys(allGamesData).map((e) => {
       io.in(e).emit(`GameData`, allGamesData[e]);
@@ -45,7 +44,7 @@ io.on("connection", (socket) => {
 
   ///Add user and password
   socket.on("UpdateUsers", (data) => {
-    createUser(data, socket.id);
+    createUser(data, socket);
     loggedOn(socket);
   });
   ///Current users
@@ -53,7 +52,7 @@ io.on("connection", (socket) => {
 
   /// CHeck password and login
   socket.on("LoginUsers", function (data, callback) {
-    let res = userLogin(data, socket.id);
+    let res = userLogin(data, socket);
     if (res === true) loggedOn(socket);
     callback(res);
   });
@@ -70,8 +69,10 @@ io.on("connection", (socket) => {
     if (ans === `Yes`) {
       createRoom(users);
       loggedOn(socket);
+      Object.keys(allGamesData).map((e) => {
+        io.in(e).emit(`GameData`, allGamesData[e]);
+      });
     } else {
-      console.log(`setroom`);
       io.to(usersData[users[0]].id).emit("RequestRefused", data);
     }
   });
@@ -83,21 +84,18 @@ io.on("connection", (socket) => {
   });
 
   socket.on("disconnect", () => {
+    Object.keys(usersData).map((e) => {
+      console.log(`${e} users`);
+      if (socket.id === usersData[e].id) {
+        io.in(usersData[e].room).emit("GameData", allGamesData.blank);
+      }
+    });
     SocketClosed(socket.id);
+
     loggedOn(socket);
     console.log(`Client disconnected ${port}`);
     // clearInterval(interval);
   });
 });
-
-// const globalCount = () => {
-//   io.emit("GlobalCount", countAll);
-// };
-
-// const getApiAndEmit = (socket) => {
-//   const response = new Date();
-//   // Emitting a new message. Will be consumed by the client
-//   io.emit("FromAPI", response);
-// };
 
 server.listen(port, () => console.log(`Listening on port ${port}`));

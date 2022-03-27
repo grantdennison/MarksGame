@@ -1,13 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { socket } from "../index";
 import "./join.css";
-import {
-  OfflineUsers,
-  OnlineUsers,
-  JoinUserPopup,
-  logUserOff,
-  joinUserWindow,
-} from "./userStatus";
+import { OfflineUsers, OnlineUsers } from "./userStatus";
 
 export default function Join(props) {
   const [joinPage, setJoinPage] = useState("off");

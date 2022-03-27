@@ -1,4 +1,16 @@
-export const allGamesData = {};
+export const allGamesData = { blank: {} };
+
+allGamesData.blank = {
+  history: [
+    {
+      squares: Array(9).fill(null),
+    },
+  ],
+  stepNumber: 0,
+  xIsNext: true,
+  toggleState: true,
+  gameDisplay: false,
+};
 
 export function createGameData(room) {
   allGamesData[room] = {

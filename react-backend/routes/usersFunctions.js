@@ -4,20 +4,21 @@ import { createGameData, deleteGameData } from "./gameData.js";
 export let users = Object.keys(usersData);
 
 //Creat new user and update users
-export function createUser(data, id) {
+export function createUser(data, socket) {
   let user = Object.keys(data);
   usersData[user] = {
-    id: id,
+    id: socket.id,
     active: true,
     password: data[user],
     loginAttempts: 3,
     room: false,
+    socket: socket,
   };
   users = Object.keys(usersData);
 }
 
 //Login users
-export function userLogin(data, id) {
+export function userLogin(data, socket) {
   let user = Object.keys(data);
   if (
     data[user] === usersData[user].password &&
@@ -25,7 +26,8 @@ export function userLogin(data, id) {
   ) {
     usersData[user].loginAttempts = 3;
     usersData[user].active = true;
-    usersData[user].id = id;
+    usersData[user].id = socket.id;
+    usersData[user].socket = socket;
 
     return true;
   } else {
@@ -77,6 +79,9 @@ export function createRoom(users) {
   let room = users[0];
   users.map((e) => {
     usersData[e].room = room;
+    let socket = usersData[e].socket;
+    socket.join(room);
+    console.log(socket.id, socket.rooms);
   });
   createGameData(room);
 }
@@ -88,6 +93,8 @@ const deleteRoom = (user) => {
   Object.keys(usersData).map((e) => {
     if (usersData[e].room === curRoom) {
       usersData[e].room = false;
+      let socket = usersData[e].socket;
+      socket.leave(user);
     }
   });
   usersData[user].room = false;

@@ -6,6 +6,7 @@ export let usersData = {
     password: "1111",
     loginAttempts: 3,
     room: false,
+    socket: ``,
   },
   Nicole: {
     id: ``,
@@ -13,6 +14,7 @@ export let usersData = {
     password: "4444",
     loginAttempts: 3,
     room: false,
+    socket: ``,
   },
   Simon: {
     id: ``,
@@ -20,5 +22,6 @@ export let usersData = {
     password: "2222",
     loginAttempts: 3,
     room: false,
+    socket: ``,
   },
 };

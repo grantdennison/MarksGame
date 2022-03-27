@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { socket } from "../index";
+import { socket } from "../index.js";
 
 let onlineUsers = [];
 let offlineUsers = [];

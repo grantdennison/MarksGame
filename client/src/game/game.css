@@ -1,5 +1,10 @@
-.game {
+.game-on {
   display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+.game-off {
+  display: none;
   flex-direction: row;
   justify-content: center;
 }

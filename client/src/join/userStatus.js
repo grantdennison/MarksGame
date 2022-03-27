@@ -7,8 +7,6 @@ let offlineUsers = [];
 export function logUserOff(offAct) {
   offlineUsers = offAct[0];
   onlineUsers = offAct[1];
-  console.log(offlineUsers);
-  console.log(onlineUsers);
 }
 
 export function OfflineUsers(props) {
@@ -21,19 +19,22 @@ export function OfflineUsers(props) {
 }
 
 ///Creat room and add two users to the room
-const createRoom = (addUser, curUser, room) => {
+const askUserToPlay = (addUser, curUser, room) => {
   if (room) {
     alert(
       `${addUser} is currently playing a game - Please wait till they are available`
     );
   } else {
-    socket.emit("SetRoom", [curUser, addUser]);
+    socket.emit("RequestUserToJoin", [curUser, addUser]);
   }
 };
 
+// export const AcceptJoin = (ans, users) => {
+//   socket.emit("SetRoom", users);
+// };
+
 export function OnlineUsers(props) {
   let newList;
-  console.log(`prop`, props.online);
   if (Object.keys(props.online).length > 0) {
     newList = Object.keys(props.online).map((user) => (
       <button
@@ -43,7 +44,11 @@ export function OnlineUsers(props) {
         }`}
         key={user.toString()}
         onClick={(e) =>
-          createRoom(e.target.value, props.currentUser, props.online[user].room)
+          askUserToPlay(
+            e.target.value,
+            props.currentUser,
+            props.online[user].room
+          )
         }
       >
         {user}

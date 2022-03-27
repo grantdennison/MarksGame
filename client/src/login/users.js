@@ -7,6 +7,14 @@ export default function UserList(props) {
   const handleClick = (user) => {
     props.setName(user);
     props.setCreate(false);
+    //////////////testing only delet////
+    if (user === `Grant`) {
+      props.setPassword(`1111`);
+    } else if (user === `Simon`) {
+      props.setPassword(`2222`);
+    } else if (user === `Nicole`) {
+      props.setPassword(`4444`);
+    }
   };
 
   const listUsers = users.map((user) => (

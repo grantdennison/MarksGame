@@ -1,13 +1,21 @@
-import { usersData } from "./usersData.js";
+export const allGamesData = {};
 
-export const gameData = {
-  history: [
-    {
-      squares: Array(9).fill(null),
-    },
-  ],
-  stepNumber: 0,
-  xIsNext: true,
-  toggleState: true,
-  gameDisplay: false,
-};
+export function createGameData(room) {
+  allGamesData[room] = {
+    history: [
+      {
+        squares: Array(9).fill(null),
+      },
+    ],
+    stepNumber: 0,
+    xIsNext: true,
+    toggleState: true,
+    gameDisplay: true,
+  };
+}
+
+export function deleteGameData(room) {
+  delete allGamesData[room];
+}
+
+export function updateGamesData(data) {}

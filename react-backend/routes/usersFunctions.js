@@ -1,5 +1,5 @@
-// import { socket } from "../../client/src/index.js";
 import { usersData } from "./usersData.js";
+import { createGameData, deleteGameData } from "./gameData.js";
 
 export let users = Object.keys(usersData);
 
@@ -35,10 +35,14 @@ export function userLogin(data, id) {
 }
 
 ////Users currently logged on
-export function usersLoggedOn() {
+export function usersLoggedOn(socket) {
   let activeUsers = {};
   let offlineUsers = [];
+  console.log(socket.rooms);
   Object.keys(usersData).forEach((e) => {
+    // if (usersData[e].active && usersData[e].room !== false) {
+    //   usersData[e].id.join(`${usersData[e].room}`);
+    // }
     if (usersData[e].active) {
       activeUsers[e] = {
         id: usersData[e].id,
@@ -68,17 +72,19 @@ export function loggedOff(user) {
   deleteRoom(user);
 }
 
-/////reate roo
+/////create room
 export function createRoom(users) {
   let room = users[0];
   users.map((e) => {
     usersData[e].room = room;
   });
+  createGameData(room);
 }
 
 ////delete room
 const deleteRoom = (user) => {
   let curRoom = usersData[user].room;
+  deleteGameData(curRoom);
   Object.keys(usersData).map((e) => {
     if (usersData[e].room === curRoom) {
       usersData[e].room = false;

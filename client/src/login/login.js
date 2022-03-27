@@ -106,6 +106,8 @@ export default function Login(props) {
           online={online}
           setName={setName}
           setCreate={setCreate}
+          //// delete for testing
+          setPassword={setPassword}
         />
       </div>
       <div className="login-form">

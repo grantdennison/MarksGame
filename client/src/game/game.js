@@ -45,7 +45,7 @@ export default function Game(props) {
       ]),
 
       xIsNext: !form.xIsNext,
-      gameDisplay: false,
+      gameDisplay: true,
     };
     socket.emit("UpdateData", updateData);
     // setValues({
@@ -76,10 +76,7 @@ export default function Game(props) {
   }
 
   return (
-    <div
-      className="game"
-      style={{ display: form.gameDisplay ? "visible" : "none" }}
-    >
+    <div className={`game-${form.gameDisplay ? "on" : "off"}`}>
       <div className="game-board">
         <Board
           squares={current.squares}

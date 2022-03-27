@@ -3,7 +3,7 @@ import { createServer } from "http";
 import { Server } from "socket.io";
 import index from "./routes/index.js";
 const port = process.env.PORT || 4001;
-import { allGamesData, updateGamesData } from "./routes/gameData.js";
+import { allGamesData, updateGamesData, scoreTurn } from "./routes/gameData.js";
 import { usersData } from "./routes/usersData.js";
 import {
   createUser,
@@ -13,6 +13,7 @@ import {
   loggedOff,
   createRoom,
   getUserRoom,
+  getUser,
 } from "./routes/usersFunctions.js";
 const app = express();
 // const cors = require("cors"); // not required by look of it
@@ -38,10 +39,11 @@ io.on("connection", (socket) => {
   ///Game data update
   socket.on("UpdateData", (data) => {
     let room = getUserRoom(socket);
+    let user = getUser(socket);
     if (room) {
-      updateGamesData(data, room);
+      updateGamesData(data, room, user, usersData);
       Object.keys(allGamesData).map((e) => {
-        io.in(e).emit(`GameData`, allGamesData[e]);
+        io.in(e).emit(`GameData`, [allGamesData[e], scoreTurn]);
       });
     }
   });

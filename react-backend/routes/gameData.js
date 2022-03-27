@@ -30,4 +30,8 @@ export function deleteGameData(room) {
   delete allGamesData[room];
 }
 
-export function updateGamesData(data) {}
+export function updateGamesData(data, room) {
+  Object.keys(data).map((e) => {
+    allGamesData[room][e] = data[e];
+  });
+}

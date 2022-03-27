@@ -12,6 +12,7 @@ import {
   SocketClosed,
   loggedOff,
   createRoom,
+  getUserRoom,
 } from "./routes/usersFunctions.js";
 const app = express();
 // const cors = require("cors"); // not required by look of it
@@ -36,10 +37,13 @@ io.on("connection", (socket) => {
 
   ///Game data update
   socket.on("UpdateData", (data) => {
-    updateGamesData(data, socket.rooms);
-    Object.keys(allGamesData).map((e) => {
-      io.in(e).emit(`GameData`, allGamesData[e]);
-    });
+    let room = getUserRoom(socket);
+    if (room) {
+      updateGamesData(data, room);
+      Object.keys(allGamesData).map((e) => {
+        io.in(e).emit(`GameData`, allGamesData[e]);
+      });
+    }
   });
 
   ///Add user and password
@@ -84,12 +88,11 @@ io.on("connection", (socket) => {
   });
 
   socket.on("disconnect", () => {
-    Object.keys(usersData).map((e) => {
-      console.log(`${e} users`);
-      if (socket.id === usersData[e].id) {
-        io.in(usersData[e].room).emit("GameData", allGamesData.blank);
-      }
-    });
+    let room = getUserRoom(socket);
+    if (room) {
+      io.in(room).emit("GameData", allGamesData.blank);
+    }
+
     SocketClosed(socket.id);
 
     loggedOn(socket);

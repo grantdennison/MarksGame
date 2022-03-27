@@ -45,7 +45,6 @@ export default function Game(props) {
       ]),
 
       xIsNext: !form.xIsNext,
-      gameDisplay: true,
     };
     socket.emit("UpdateData", updateData);
   };

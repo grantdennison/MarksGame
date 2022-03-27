@@ -40,7 +40,6 @@ export function userLogin(data, socket) {
 export function usersLoggedOn(socket) {
   let activeUsers = {};
   let offlineUsers = [];
-  console.log(socket.rooms);
   Object.keys(usersData).forEach((e) => {
     // if (usersData[e].active && usersData[e].room !== false) {
     //   usersData[e].id.join(`${usersData[e].room}`);
@@ -71,7 +70,6 @@ export function SocketClosed(id) {
 export function loggedOff(user) {
   usersData[user].id = ``;
   usersData[user].active = false;
-  deleteRoom(user);
 }
 
 /////create room
@@ -81,7 +79,6 @@ export function createRoom(users) {
     usersData[e].room = room;
     let socket = usersData[e].socket;
     socket.join(room);
-    console.log(socket.id, socket.rooms);
   });
   createGameData(room);
 }
@@ -91,7 +88,7 @@ const deleteRoom = (user) => {
   let curRoom = usersData[user].room;
   deleteGameData(curRoom);
   Object.keys(usersData).map((e) => {
-    if (usersData[e].room === curRoom) {
+    if (usersData[e].room === curRoom && curRoom) {
       usersData[e].room = false;
       let socket = usersData[e].socket;
       socket.leave(user);
@@ -99,3 +96,13 @@ const deleteRoom = (user) => {
   });
   usersData[user].room = false;
 };
+
+export function getUserRoom(socket) {
+  let room;
+  Object.keys(usersData).map((e) => {
+    if (socket.id === usersData[e].id) {
+      room = usersData[e].room;
+    }
+  });
+  return room;
+}

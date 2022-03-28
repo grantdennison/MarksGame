@@ -1,3 +1,5 @@
+import { usersData } from "./usersData.js";
+
 export const allGamesData = { blank: {} };
 export const scoreTurn = {};
 
@@ -25,8 +27,8 @@ export function createGameData(room) {
     toggleState: true,
     gameDisplay: true,
   };
-  scoreTurn[room].turn = true;
-  scoreTurn[room].start = true;
+  scoreTurn[usersData[room].id].turn = true;
+  scoreTurn[usersData[room].id].start = true;
 }
 
 export function deleteGameData(room) {
@@ -34,15 +36,14 @@ export function deleteGameData(room) {
 }
 
 export function updateGamesData(data, room, user, usersData) {
-  if (scoreTurn[user].turn) {
+  if (scoreTurn[usersData[user].id].turn) {
     Object.keys(data).map((e) => {
       allGamesData[room][e] = data[e];
     });
     Object.keys(usersData).map((e) => {
       if (usersData[e].room === room) {
-        console.log(scoreTurn[e], e);
-        scoreTurn[e].turn = !scoreTurn[e].turn;
-        console.log(scoreTurn[e], e);
+        scoreTurn[usersData[e].id].turn = !scoreTurn[usersData[e].id].turn;
+        console.log(scoreTurn[usersData[e].id], e);
       }
     });
   }

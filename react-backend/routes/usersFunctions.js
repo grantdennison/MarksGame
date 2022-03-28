@@ -61,6 +61,7 @@ export function SocketClosed(id) {
   Object.keys(usersData).forEach((e) => {
     if (usersData[e].id === id) {
       usersData[e].active = false;
+      usersData[e].id = ``;
       deleteRoom(e);
     }
   });
@@ -76,7 +77,12 @@ export function loggedOff(user) {
 export function createRoom(users) {
   let room = users[0];
   users.map((e) => {
-    scoreTurn[e] = { score: 0, turn: false, start: false };
+    scoreTurn[usersData[e].id] = {
+      player: e,
+      score: 0,
+      turn: false,
+      start: false,
+    };
     usersData[e].room = room;
     let socket = usersData[e].socket;
     socket.join(room);

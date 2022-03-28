@@ -76,7 +76,7 @@ io.on("connection", (socket) => {
       createRoom(users);
       loggedOn(socket);
       Object.keys(allGamesData).map((e) => {
-        io.in(e).emit(`GameData`, allGamesData[e]);
+        io.in(e).emit(`GameData`, [allGamesData[e], scoreTurn]);
       });
     } else {
       io.to(usersData[users[0]].id).emit("RequestRefused", data);
@@ -92,7 +92,7 @@ io.on("connection", (socket) => {
   socket.on("disconnect", () => {
     let room = getUserRoom(socket);
     if (room) {
-      io.in(room).emit("GameData", allGamesData.blank);
+      io.in(room).emit("GameData", [allGamesData.blank, scoreTurn]);
     }
 
     SocketClosed(socket.id);

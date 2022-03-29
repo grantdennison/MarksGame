@@ -22,11 +22,8 @@ export default function Game(props) {
     socket.on("GameData", (data) => {
       setValues(data[0]);
       let scores = data[1];
-      console.log(scores);
       Object.keys(scores).map((e) => {
-        console.log(e);
         if (e === socket.id) {
-          console.log(123121312);
           setCurPlayer([scores[e].player, scores[e].score, scores[e].turn]);
         } else {
           setOponent([scores[e].player, scores[e].score]);
@@ -62,9 +59,10 @@ export default function Game(props) {
   const current = history[history.length - 1];
   const winner = calculateWinner(current.squares);
   const draw = calculateStillWin(current.squares);
-
   let status;
+
   if (winner) {
+    console.log(`winner`);
     status = `🎉${!curPlayer[2] ? curPlayer[0] : oponent[0]} is the Winner🎉`;
   } else if (!draw) {
     status = `😔Draw😔`;
@@ -84,6 +82,8 @@ export default function Game(props) {
       <div className="game-info">
         {`${curPlayer[0]}: ${curPlayer[1]}    vs    ${oponent[0]}: ${oponent[1]}`}
         <div className="game-player">{status}</div>
+        <button className="new-game-btn">New Game</button>
+        <button className="log-out-btn">Quit Game</button>
       </div>
     </div>
   );

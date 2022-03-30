@@ -35,11 +35,16 @@ export function deleteGameData(room) {
   delete allGamesData[room];
 }
 
-export function updateGamesData(data, room, user, usersData) {
+export function updateGamesData(dataHasWOn, room, user, usersData) {
+  let data = dataHasWOn[0];
+  let hasWon = dataHasWOn[1];
   if (scoreTurn[usersData[user].id].turn) {
     Object.keys(data).map((e) => {
       allGamesData[room][e] = data[e];
     });
+    if (hasWon) {
+      scoreTurn[usersData[user].id].score++;
+    }
     Object.keys(usersData).map((e) => {
       if (usersData[e].room === room) {
         scoreTurn[usersData[e].id].turn = !scoreTurn[usersData[e].id].turn;

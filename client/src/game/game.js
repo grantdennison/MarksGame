@@ -40,6 +40,7 @@ export default function Game(props) {
 
     /// calculate if winner
     if (calculateWinner(squares) || squares[i] || !draw) {
+      console.log(`retrun funvtion`);
       return;
     }
     squares[i] = form.xIsNext ? `X` : `O`;
@@ -52,15 +53,21 @@ export default function Game(props) {
 
       xIsNext: !form.xIsNext,
     };
-    socket.emit("UpdateData", updateData);
+    let hasWon = calculateWinner(
+      updateData.history[updateData.history.length - 1].squares
+    )
+      ? true
+      : false;
+    console.log(hasWon, `haswon`);
+    socket.emit("UpdateData", [updateData, hasWon]);
   };
 
   const history = form.history;
   const current = history[history.length - 1];
   const winner = calculateWinner(current.squares);
   const draw = calculateStillWin(current.squares);
-  let status;
 
+  let status;
   if (winner) {
     console.log(`winner`);
     status = `🎉${!curPlayer[2] ? curPlayer[0] : oponent[0]} is the Winner🎉`;

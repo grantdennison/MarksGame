@@ -20,6 +20,7 @@ export default function Game(props) {
 
   useEffect(() => {
     socket.on("GameData", (data) => {
+      console.log(data);
       setValues(data[0]);
       let scores = data[1];
       Object.keys(scores).map((e) => {
@@ -58,7 +59,6 @@ export default function Game(props) {
     )
       ? true
       : false;
-    console.log(hasWon, `haswon`);
     socket.emit("UpdateData", [updateData, hasWon]);
   };
 
@@ -67,9 +67,15 @@ export default function Game(props) {
   const winner = calculateWinner(current.squares);
   const draw = calculateStillWin(current.squares);
 
+  const restartGame = () => {
+    if (calculateWinner(current.squares)) {
+      socket.emit("RestartGame");
+    } else {
+      alert(`Unable to restart until the game is finished`);
+    }
+  };
   let status;
   if (winner) {
-    console.log(`winner`);
     status = `🎉${!curPlayer[2] ? curPlayer[0] : oponent[0]} is the Winner🎉`;
   } else if (!draw) {
     status = `😔Draw😔`;
@@ -89,8 +95,15 @@ export default function Game(props) {
       <div className="game-info">
         {`${curPlayer[0]}: ${curPlayer[1]}    vs    ${oponent[0]}: ${oponent[1]}`}
         <div className="game-player">{status}</div>
-        <button className="new-game-btn">New Game</button>
-        <button className="log-out-btn">Quit Game</button>
+        <button className="new-game-btn" onClick={() => restartGame()}>
+          New Game
+        </button>
+        <button
+          className="log-out-btn"
+          onClick={() => socket.emit("LogOutOfRoom")}
+        >
+          Quit Game
+        </button>
       </div>
     </div>
   );

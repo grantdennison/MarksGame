@@ -3,7 +3,12 @@ import { createServer } from "http";
 import { Server } from "socket.io";
 import index from "./routes/index.js";
 const port = process.env.PORT || 4001;
-import { allGamesData, updateGamesData, scoreTurn } from "./routes/gameData.js";
+import {
+  allGamesData,
+  updateGamesData,
+  scoreTurn,
+  restartGame,
+} from "./routes/gameData.js";
 import { usersData } from "./routes/usersData.js";
 import {
   createUser,
@@ -14,6 +19,7 @@ import {
   createRoom,
   getUserRoom,
   getUser,
+  deleteRoom,
 } from "./routes/usersFunctions.js";
 const app = express();
 // const cors = require("cors"); // not required by look of it
@@ -41,11 +47,30 @@ io.on("connection", (socket) => {
     let room = getUserRoom(socket);
     let user = getUser(socket);
     if (room) {
-      updateGamesData(data, room, user, usersData);
+      updateGamesData(data, room, user, usersData, socket);
       Object.keys(allGamesData).map((e) => {
         io.in(e).emit(`GameData`, [allGamesData[e], scoreTurn]);
       });
     }
+  });
+  ///Next Game
+  socket.on("RestartGame", () => {
+    let room = getUserRoom(socket);
+    restartGame(room);
+    io.in(room).emit(`GameData`, [allGamesData[room], scoreTurn]);
+  });
+
+  ///Log out of the room
+  socket.on("LogOutOfRoom", () => {
+    let room = getUserRoom(socket);
+
+    if (room) {
+      io.in(room).emit("GameData", [allGamesData.blank, scoreTurn]);
+    }
+    deleteRoom(room);
+
+    loggedOn(socket);
+    // clearInterval(interval);
   });
 
   ///Add user and password

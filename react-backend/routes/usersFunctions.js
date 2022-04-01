@@ -91,13 +91,13 @@ export function createRoom(users) {
 }
 
 ////delete room
-const deleteRoom = (user) => {
+export const deleteRoom = (user) => {
   let curRoom = usersData[user].room;
   deleteGameData(curRoom);
   Object.keys(usersData).map((e) => {
     if (usersData[e].room === curRoom && curRoom) {
       usersData[e].room = false;
-      scoreTurn[e] = {};
+      delete scoreTurn[usersData.id];
       let socket = usersData[e].socket;
       socket.leave(user);
     }

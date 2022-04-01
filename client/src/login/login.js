@@ -32,8 +32,10 @@ export default function Login(props) {
   const handleChange = (e) => {
     if (e && e.slice(-1) === ` `) {
       alert(`No spaces allowed`);
+    } else if (e.length > 8) {
     } else if (e) {
       setName(e[0].toUpperCase() + e.slice(1).toLowerCase());
+    } else if (e.length > 8) {
     } else {
       setName(e);
     }

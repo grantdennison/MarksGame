@@ -7,7 +7,7 @@ export default function Login(props) {
   const [name, setName] = useState("");
   const [password, setPassword] = useState("");
   const [create, setCreate] = useState(false);
-  const [loginPage, setLoginPage] = useState("on");
+  const [loginPage, setLoginPage] = useState("off");
   const [users, setUsers] = useState([`Grant`, `Nicole`]);
   const [online, setOnline] = useState([]);
 
@@ -24,7 +24,7 @@ export default function Login(props) {
           logged = true;
         }
       });
-      logged ? setLoginPage("off") : setLoginPage("on");
+      logged ? setLoginPage("off") : setLoginPage("off");
     });
   }, []);
 
@@ -89,7 +89,7 @@ export default function Login(props) {
   const createUser = () => {
     setName("");
     setPassword("");
-    setCreate(true);
+    setCreate(!create);
   };
 
   return (
@@ -114,12 +114,12 @@ export default function Login(props) {
       </div>
       <div className="login-form">
         <input
-          placeholder="username"
+          placeholder="Username"
           value={name}
           onChange={(e) => handleChange(e.target.value)}
         />
         <input
-          placeholder="password"
+          placeholder="Password"
           value={password}
           onChange={(e) => handleChangePassword(e.target.value)}
         />
@@ -129,7 +129,9 @@ export default function Login(props) {
       </div>
       <div>
         <p>Or:</p>
-        <button onClick={() => createUser()}>Creat new account</button>
+        <button onClick={() => createUser()}>
+          {create ? "Existing user login" : "Creat new User"}
+        </button>
       </div>
     </div>
   );

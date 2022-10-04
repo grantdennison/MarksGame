@@ -1,6 +1,8 @@
 body {
   font: 14px "Century Gothic", Futura, sans-serif;
   background-image: linear-gradient(to right, red, yellow, green, blue);
+  /* margin: 20px; */
+  min-width: 600px;
 }
 
 ol,

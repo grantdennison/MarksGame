@@ -1,18 +1,17 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import "./index.css";
-
+import Game from "./game/game";
 import Login from "./login/login";
 import Join from "./join/join";
 import reportWebVitals from "./reportWebVitals";
 import socketIOClient from "socket.io-client";
-import Room from "./room/room";
 const ENDPOINT = "http://localhost:4001/";
 export const socket = socketIOClient(ENDPOINT);
 
 ReactDOM.render(
   <React.StrictMode>
-    <Room />
+    <Game />
     <Login />
     <Join />
   </React.StrictMode>,

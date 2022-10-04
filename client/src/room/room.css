@@ -1,0 +1,45 @@
+body {
+  background: url("roomBackground.jpg") no-repeat;
+}
+.room-sheet-on {
+  font-size: 20px;
+  font-weight: bold;
+  text-align: center;
+}
+.room-sheet-off {
+  display: none;
+}
+.room-welcome {
+  font-size: 11vw;
+  font-weight: 400;
+  font-family: "Brush Script MT";
+  margin-bottom: 5px;
+}
+
+.room-login {
+  margin-bottom: 5px;
+  font-size: 5.5vw;
+  font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif;
+}
+
+input {
+  border-radius: 25px;
+  padding: 5px;
+  margin-bottom: 10px;
+  box-shadow: 2px 2px 5px black;
+}
+
+input:focus {
+  padding: 7px;
+}
+
+button {
+  border-radius: 25px;
+  padding: 5px 15px 5px;
+  margin-bottom: 10px;
+  box-shadow: 2px 2px 5px black;
+}
+
+button:hover {
+  padding: 5px 17px 5px;
+}

@@ -3,24 +3,6 @@ import { createServer } from "http";
 import { Server } from "socket.io";
 import index from "./routes/index.js";
 const port = process.env.PORT || 4001;
-import {
-  allGamesData,
-  updateGamesData,
-  scoreTurn,
-  restartGame,
-} from "./routes/gameData.js";
-import { usersData } from "./routes/usersData.js";
-import {
-  createUser,
-  userLogin,
-  usersLoggedOn,
-  SocketClosed,
-  loggedOff,
-  createRoom,
-  getUserRoom,
-  getUser,
-  deleteRoom,
-} from "./routes/usersFunctions.js";
 const app = express();
 // const cors = require("cors"); // not required by look of it
 app.use(index);
@@ -42,83 +24,9 @@ io.on("connection", (socket) => {
   // console.log(socket.rooms);
   // console.log(socket.id); //socket id
 
-  ///Game data update
-  socket.on("UpdateData", (data) => {
-    let room = getUserRoom(socket);
-    let user = getUser(socket);
-    if (room) {
-      updateGamesData(data, room, user, usersData, socket);
-      Object.keys(allGamesData).map((e) => {
-        io.in(e).emit(`GameData`, [allGamesData[e], scoreTurn]);
-      });
-    }
-  });
-  ///Next Game
-  socket.on("RestartGame", () => {
-    let room = getUserRoom(socket);
-    restartGame(room);
-    io.in(room).emit(`GameData`, [allGamesData[room], scoreTurn]);
-  });
+  
 
-  ///Log out of the room
-  socket.on("LogOutOfRoom", () => {
-    let room = getUserRoom(socket);
-
-    if (room) {
-      io.in(room).emit("GameData", [allGamesData.blank, scoreTurn]);
-    }
-    deleteRoom(room);
-
-    loggedOn(socket);
-    // clearInterval(interval);
-  });
-
-  ///Add user and password
-  socket.on("UpdateUsers", (data) => {
-    createUser(data, socket);
-    loggedOn(socket);
-  });
-  ///Current users
-  loggedOn(socket);
-
-  /// CHeck password and login
-  socket.on("LoginUsers", function (data, callback) {
-    let res = userLogin(data, socket);
-    if (res === true) loggedOn(socket);
-    callback(res);
-  });
-
-  //Request user to join room
-  socket.on("RequestUserToJoin", (users) => {
-    io.to(usersData[users[1]].id).emit("AskToJoinRoom", users);
-  });
-
-  ///add users to a room
-  socket.on("SetRoom", (data) => {
-    let users = data[0];
-    let ans = data[1];
-    if (ans === `Yes`) {
-      createRoom(users);
-      loggedOn(socket);
-      Object.keys(allGamesData).map((e) => {
-        io.in(e).emit(`GameData`, [allGamesData[e], scoreTurn]);
-      });
-    } else {
-      io.to(usersData[users[0]].id).emit("RequestRefused", data);
-    }
-  });
-
-  ///Log out current user
-  socket.on("LogoutUser", function (data) {
-    loggedOff(data);
-    loggedOn(socket);
-  });
-
-  socket.on("disconnect", () => {
-    let room = getUserRoom(socket);
-    if (room) {
-      io.in(room).emit("GameData", [allGamesData.blank, scoreTurn]);
-    }
+ 
 
     SocketClosed(socket.id);
 

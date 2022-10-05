@@ -3,11 +3,10 @@ import "./room.css";
 import { socket } from "../index";
 
 export default function Room(props) {
-  const [name, setName] = useState("");
+  const [game, setGame] = useState("");
   const [passcode, setPasscode] = useState("");
   const [create, setCreate] = useState(false);
   const [roomPage, setroomPage] = useState("on");
-  const [online, setOnline] = useState([]);
 
   //   useEffect(() => {
   //     socket.on("LoggedOn", (offAct) => {
@@ -30,11 +29,11 @@ export default function Room(props) {
   const handleChange = (e) => {
     if (e.length > 20) {
     } else {
-      setName(e);
+      setGame(e);
     }
   };
   //handle password text box
-  const handleChangePassword = (e) => {
+  const handleChangePasscode = (e) => {
     if (e && e.slice(-1) === ` `) {
       alert(`No spaces allowed`);
     } else if (e.length > 6) {
@@ -45,26 +44,26 @@ export default function Room(props) {
 
   // Submit button
   const handleSubmit = (e) => {
-    // if (online.includes(name)) {
+    // if (online.includes(game)) {
     //   alert(`Already logged in on another page`);
-    // } else if (!users.includes(name) && !create) alert(`User does not exist`);
+    // } else if (!users.includes(game) && !create) alert(`User does not exist`);
     // else if (passcode.length < 4)
     //   alert(`Password must be 4 characters or more!`);
-    // else if (name.length < 4) alert(`Username must be 4 characters or more!`);
+    // else if (game.length < 4) alert(`Username must be 4 characters or more!`);
     // else if (create && users.includes(name)) alert(`User name already taken`);
     // ///////creat new user
     // else if (create) {
     //   let obj = {};
-    //   obj[name] = passcode;
+    //   obj[game] = passcode;
     //   socket.emit("UpdateUsers", obj);
     // }
     // ///login user
     // else {
     //   let obj = {};
-    //   obj[name] = passcode;
+    //   obj[game] = passcode;
     //   socket.emit("LoginUsers", obj, function (res) {
     //     if (res === true) {
-    //       setName("");
+    //       setGame("");
     //       setPasscode("");
     //     } else {
     //       alert(
@@ -79,7 +78,7 @@ export default function Room(props) {
   };
 
   const creatRoom = () => {
-    setName("");
+    setGame("");
     setPasscode("");
     setCreate(!create);
   };
@@ -97,7 +96,7 @@ export default function Room(props) {
         <div>
           <input
             placeholder="Game Name"
-            value={name}
+            value={game}
             onChange={(e) => handleChange(e.target.value)}
           />
         </div>
@@ -105,7 +104,7 @@ export default function Room(props) {
           <input
             placeholder="Passcode"
             value={passcode}
-            onChange={(e) => handleChangePassword(e.target.value)}
+            onChange={(e) => handleChangePasscode(e.target.value)}
           />
         </div>
         <div>

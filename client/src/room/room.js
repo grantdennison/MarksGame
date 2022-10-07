@@ -6,7 +6,7 @@ export default function Room(props) {
   const [game, setGame] = useState("");
   const [passcode, setPasscode] = useState("");
   const [create, setCreate] = useState(false);
-  const [roomPage, setroomPage] = useState("on");
+  const [roomPage, setroomPage] = useState("off");
 
   //   useEffect(() => {
   //     socket.on("LoggedOn", (offAct) => {

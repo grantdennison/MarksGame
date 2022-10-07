@@ -1,25 +1,18 @@
-.login-welcome {
-  font-size: 60px;
-  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-  margin-top: -2px;
-  margin-bottom: -2px;
-}
-
-.login-login {
-  margin-bottom: -2px;
-  font-size: 30px;
-  font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif;
-}
-
 .login-sheet-on {
-  font-size: 20px;
+  font-size: min(5.5vw, 30px);
   font-weight: bold;
+  text-align: center;
 }
 .login-sheet-off {
   display: none;
-  font-size: 20px;
-  font-weight: bold;
 }
-.user-buttons:hover {
-  background-color: rgb(155, 212, 155);
+.login-welcome {
+  font-family: "Brush Script MT";
+  font-weight: 200;
+  text-shadow: 3px 3px 4px rgb(58, 55, 55);
+}
+
+.login-login {
+  font-size: 30px;
+  font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif;
 }

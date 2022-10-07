@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from "react";
-import UserList from "./users";
+import React, { useState, useEffect, createContext } from "react";
+import Testing from "./testing.js";
 import "./login.css";
 import { socket } from "../index";
 
@@ -7,7 +7,7 @@ export default function Login(props) {
   const [name, setName] = useState("");
   const [password, setPassword] = useState("");
   const [create, setCreate] = useState(false);
-  const [loginPage, setLoginPage] = useState("off");
+  const [loginPage, setLoginPage] = useState("on");
   const [users, setUsers] = useState([`Grant`, `Nicole`]);
   const [online, setOnline] = useState([]);
 
@@ -24,7 +24,7 @@ export default function Login(props) {
           logged = true;
         }
       });
-      logged ? setLoginPage("off") : setLoginPage("off");
+      logged ? setLoginPage("off") : setLoginPage("on");
     });
   }, []);
 
@@ -53,13 +53,8 @@ export default function Login(props) {
 
   /// Submit button
   const handleSubmit = (e) => {
-    if (online.includes(name)) {
-      alert(`Already logged in on another page`);
-    } else if (!users.includes(name) && !create) alert(`User does not exist`);
-    else if (password.length < 4)
-      alert(`Password must be 4 characters or more!`);
+    if (password.length < 4) alert(`Password must be 4 characters or more!`);
     else if (name.length < 4) alert(`Username must be 4 characters or more!`);
-    else if (create && users.includes(name)) alert(`User name already taken`);
     ///////creat new user
     else if (create) {
       let obj = {};
@@ -74,6 +69,9 @@ export default function Login(props) {
         if (res === true) {
           setName("");
           setPassword("");
+          alert(`you are logged in`);
+        } else if (res === false) {
+          alert(`User does not exist`);
         } else {
           alert(
             res <= 0
@@ -97,32 +95,28 @@ export default function Login(props) {
       className={`login-sheet-${loginPage}`}
       // style={{ display: loginPage ? "visible" : "none" }}
     >
-      <h1 className="login-welcome">Welcome to TicTacToe</h1>
+      <h1 className="login-welcome">Welcome to Mark's Game</h1>
       <h2 className="login-login">
         {create ? "Create New Account:" : "Please login:"}
       </h2>
-      <p>Select Current User:</p>
-      <div>
-        <UserList
-          users={users}
-          online={online}
-          setName={setName}
-          setCreate={setCreate}
-          //// delete for testing
-          setPassword={setPassword}
-        />
-      </div>
+      {/* testing only delete */}
+      <Testing setName={setName} setPassword={setPassword} />
+
       <div className="login-form">
         <input
           placeholder="Username"
           value={name}
           onChange={(e) => handleChange(e.target.value)}
         />
+      </div>
+      <div>
         <input
           placeholder="Password"
           value={password}
           onChange={(e) => handleChangePassword(e.target.value)}
         />
+      </div>
+      <div>
         <button onClick={() => handleSubmit()}>
           {create ? "Create" : "Submit"}
         </button>

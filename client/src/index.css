@@ -1,8 +1,28 @@
-/* body {
-  font: 14px "Century Gothic", Futura, sans-serif;
-  background-image: linear-gradient(to right, red, yellow, green, blue);
-} */
+body {
+  background: url("/src/img/roomBackground.jpg") no-repeat;
+}
+input {
+  border-radius: 25px;
+  padding: 5px;
+  margin-bottom: 10px;
+  box-shadow: 4px 4px 5px black;
+}
 
+input:focus {
+  padding: 7px;
+}
+
+button {
+  border-radius: 25px;
+  padding: 5px 15px 5px;
+  margin-bottom: 10px;
+  box-shadow: 4px 4px 5px black;
+}
+
+button:hover {
+  padding: 5px 17px 5px;
+  background-color: aquamarine;
+}
 /* ol, */
 /* ul {
   padding-left: 30px;

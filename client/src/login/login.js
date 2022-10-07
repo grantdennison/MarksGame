@@ -1,29 +1,17 @@
 import React, { useState, useEffect, createContext } from "react";
 import Testing from "./testing.js";
 import "./login.css";
-import { socket } from "../index";
+import { socket } from "../index.js";
 
 export default function Login(props) {
   const [name, setName] = useState("");
   const [password, setPassword] = useState("");
   const [create, setCreate] = useState(false);
   const [loginPage, setLoginPage] = useState("on");
-  const [users, setUsers] = useState([`Grant`, `Nicole`]);
-  const [online, setOnline] = useState([]);
 
   useEffect(() => {
-    socket.on("LoggedOn", (offAct) => {
+    socket.on("UserStatus", (offAct) => {
       let logged = false;
-      let offlineUsers = offAct[0];
-      let onlineUsers = offAct[1];
-
-      setUsers(offlineUsers);
-      setOnline(Object.keys(onlineUsers));
-      Object.keys(onlineUsers).forEach((e) => {
-        if (onlineUsers[e].id === socket.id) {
-          logged = true;
-        }
-      });
       logged ? setLoginPage("off") : setLoginPage("on");
     });
   }, []);

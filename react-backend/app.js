@@ -8,6 +8,7 @@ import { roomData } from "./routes/roomData.js";
 import { loginUser } from "./routes/functions/loginUser.js";
 import { createUser } from "./routes/functions/createUser.js";
 import { usersData } from "./routes/userData.js";
+import { userStatus } from "./routes/functions/userStatus.js";
 
 const port = process.env.PORT || 4001;
 const app = express();
@@ -23,7 +24,7 @@ const io = new Server(server, {
 });
 
 /// Send all logged on users
-const loggedOn = (socket) => io.emit("LoggedOn", usersLoggedOn(socket));
+const updateUser = (data) => io.emit("UserStatus", userStatus(data));
 
 io.on("connection", (socket) => {
   console.log(`New client connected`);
@@ -34,13 +35,16 @@ io.on("connection", (socket) => {
   /// CHeck password and login
   socket.on("LoginUsers", function (data, callback) {
     let res = loginUser(data, socket);
-    // if (res === true) loggedOn(socket);
+    if (res === true) updateUser(data);
     callback(res);
   });
   ///Creat new user and login
   socket.on("CreateUsers", function (data, callback) {
     if (Object.keys(data) in usersData) callback(false);
-    else createUser(data, socket);
+    else {
+      createUser(data, socket);
+      updateUser(data);
+    }
   });
 
   //User disconnected

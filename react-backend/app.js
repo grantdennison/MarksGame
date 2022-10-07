@@ -7,6 +7,7 @@ import index from "./routes/index.js";
 import { roomData } from "./routes/roomData.js";
 import { loginUser } from "./routes/functions/loginUser.js";
 import { createUser } from "./routes/functions/createUser.js";
+import { usersData } from "./routes/userData.js";
 
 const port = process.env.PORT || 4001;
 const app = express();
@@ -35,6 +36,11 @@ io.on("connection", (socket) => {
     let res = loginUser(data, socket);
     // if (res === true) loggedOn(socket);
     callback(res);
+  });
+  ///Creat new user and login
+  socket.on("CreateUsers", function (data, callback) {
+    if (Object.keys(data) in usersData) callback(false);
+    else createUser(data, socket);
   });
 
   //User disconnected

@@ -59,7 +59,9 @@ export default function Login(props) {
     else if (create) {
       let obj = {};
       obj[name] = password;
-      socket.emit("UpdateUsers", obj);
+      socket.emit("CreateUsers", obj, function (res) {
+        if (res === false) alert(`User name ${name} is already taken`);
+      });
     }
     ///login user
     else {

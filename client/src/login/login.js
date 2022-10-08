@@ -1,4 +1,4 @@
-import React, { useState, useEffect, createContext } from "react";
+import React, { useState, useEffect } from "react";
 import Testing from "./testing.js";
 import "./login.css";
 import { socket } from "../index.js";
@@ -10,9 +10,9 @@ export default function Login(props) {
   const [loginPage, setLoginPage] = useState("on");
 
   useEffect(() => {
-    socket.on("UserStatus", (offAct) => {
-      let logged = false;
-      logged ? setLoginPage("off") : setLoginPage("on");
+    socket.on("UserStatus", (page) => {
+      console.log(`Page = ${page}`);
+      page[0] === 1 ? setLoginPage("on") : setLoginPage("off");
     });
   }, []);
 
@@ -45,21 +45,18 @@ export default function Login(props) {
     else if (name.length < 4) alert(`Username must be 4 characters or more!`);
     ///////creat new user
     else if (create) {
-      let obj = {};
-      obj[name] = password;
+      let obj = [name, password];
       socket.emit("CreateUsers", obj, function (res) {
         if (res === false) alert(`User name ${name} is already taken`);
       });
     }
     ///login user
     else {
-      let obj = {};
-      obj[name] = password;
+      let obj = [name, password];
       socket.emit("LoginUsers", obj, function (res) {
         if (res === true) {
           setName("");
           setPassword("");
-          alert(`you are logged in`);
         } else if (res === false) {
           alert(`User does not exist`);
         } else {
@@ -112,7 +109,7 @@ export default function Login(props) {
         </button>
       </div>
       <div>
-        <p>Or:</p>
+        <p className="login-login">Or:</p>
         <button onClick={() => createUser()}>
           {create ? "Existing user login" : "Creat new User"}
         </button>

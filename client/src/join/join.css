@@ -1,124 +1,18 @@
+.join-sheet-on {
+  font-size: min(7vw, 30px);
+  font-weight: bold;
+  text-align: center;
+  text-shadow: 0px 0px 3px rgb(70, 67, 67), 0px 0px 4px rgb(226, 221, 221);
+}
 .join-sheet-off {
   display: none;
 }
-
 .join-welcome {
-  font-size: 50px;
-  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-  margin-top: -2px;
-  margin-bottom: -2px;
+  font-family: "Brush Script MT";
+  font-weight: 200;
 }
 
-.container {
-  position: relative;
-  width: 700px;
-  font-size: 20px;
-  font-weight: bold;
-}
-
-.container .box {
-  position: relative;
-  float: left;
-  width: 300px;
-  min-height: 220px;
-  border: 10px solid black;
-  padding: 2px;
-  margin: 5px;
-  border-radius: 30px;
-}
-
-.offline-button {
-  background-color: rgb(238, 168, 146);
-  margin: 3px;
-  padding: 10px;
-  font-weight: bold;
-  border-radius: 12px;
-}
-
-.online-button-none {
-  background-color: rgb(244, 248, 248);
-  margin: 3px;
-  padding: 10px;
-  font-weight: bold;
-  border-radius: 12px;
-}
-
-.online-button-none:hover {
-  background-color: aquamarine;
-  padding: 12px;
-  margin: 1px;
-}
-
-.online-button-room {
-  background-color: rgb(236, 162, 128);
-  color: rgb(100, 84, 70);
-  margin: 3px;
-  padding: 10px;
-  font-weight: bold;
-  border-radius: 12px;
-}
-
-.logoff-button {
-  background-color: rgb(125, 137, 241);
-  margin: 3px;
-  padding: 10px;
-  font-weight: bold;
-  border-radius: 12px;
-}
-
-.logoff-button:hover {
-  background-color: rgb(238, 145, 145);
-  padding: 12px;
-  margin: 1px;
-}
-
-.join-user-popup-on {
-  margin: -10px;
-  position: fixed;
-  height: 101%;
-  width: 101%;
-  background-color: rgba(0, 0, 0, 0.85);
-  z-index: 1;
-  color: white;
-  font-weight: BOLD;
-  text-align: center;
-}
-.join-user-popup-off {
-  display: none;
-}
-.join-user-popup-heading {
-  font-size: 50px;
-}
-.join-user-popup-para {
-  font-size: 40px;
-}
-
-.join-popup-yes {
-  opacity: 100%;
-  background-color: rgb(11, 119, 11);
-  width: 80px;
-  height: 40px;
+.join-join {
   font-size: 30px;
-  font-weight: bold;
-  border-top-left-radius: 20px;
-  border-bottom-left-radius: 20px;
-}
-.join-popup-no {
-  opacity: 100%;
-  background-color: rgb(129, 9, 9);
-  width: 80px;
-  height: 40px;
-  font-size: 30px;
-  font-weight: bold;
-  border-top-right-radius: 20px;
-  border-bottom-right-radius: 20px;
-}
-
-.join-popup-no:hover {
-  background-color: rgb(253, 5, 5);
-  width: 100px;
-}
-.join-popup-yes:hover {
-  background-color: rgb(3, 228, 3);
-  width: 100px;
+  font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif;
 }

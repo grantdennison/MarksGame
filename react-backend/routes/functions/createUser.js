@@ -1,14 +1,18 @@
 // create and login user
-import { usersData } from "../userData.js";
+import { usersData } from "../data/userData.js";
 
 export function createUser(data, socket) {
-  let user = Object.keys(data);
+  if (data[0] in usersData) return false;
+  let user = data[0];
+  let password = data[1];
+
   usersData[user] = {
     id: socket.id,
     active: true,
-    password: data[user],
+    password: password,
     loginAttempts: 3,
     room: false,
     socket: socket
   };
+  return true;
 }

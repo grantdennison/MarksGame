@@ -5,7 +5,7 @@ export const usersData = {
     active: false,
     password: "1111",
     loginAttempts: 3,
-    room: false,
+    game: false,
     socket: ``
   },
   Nicole: {
@@ -13,7 +13,7 @@ export const usersData = {
     active: false,
     password: "1111",
     loginAttempts: 3,
-    room: false,
+    game: false,
     socket: ``
   },
   Simon: {
@@ -21,7 +21,7 @@ export const usersData = {
     active: false,
     password: "1111",
     loginAttempts: 3,
-    room: false,
+    game: false,
     socket: ``
   },
   Leigh: {
@@ -29,7 +29,7 @@ export const usersData = {
     active: false,
     password: "1111",
     loginAttempts: 3,
-    room: false,
+    game: false,
     socket: ``
   },
   Mark: {
@@ -37,7 +37,7 @@ export const usersData = {
     active: false,
     password: "1111",
     loginAttempts: 3,
-    room: false,
+    game: false,
     socket: ``
   }
 };

@@ -1,19 +1,19 @@
-.room-sheet-on {
+.game-sheet-on {
   font-size: 20px;
   font-weight: bold;
   text-align: center;
 }
-.room-sheet-off {
+.game-sheet-off {
   display: none;
 }
-.room-welcome {
+.game-welcome {
   font-size: 11vw;
   font-weight: 400;
   font-family: "Brush Script MT";
   margin-bottom: 5px;
 }
 
-.room-login {
+.game-login {
   margin-bottom: 5px;
   font-size: 5.5vw;
   font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif;

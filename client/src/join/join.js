@@ -1,129 +1,118 @@
 import React, { useState, useEffect } from "react";
 import { socket } from "../index";
 import "./join.css";
-import { OfflineUsers, OnlineUsers } from "./userStatus";
 
 export default function Join(props) {
   const [joinPage, setJoinPage] = useState("off");
-  const [users, setUsers] = useState([]);
-  const [online, setOnline] = useState([]);
-  const [currentUser, setCurrentUser] = useState([]);
-  const [joinPopup, setJoinPopup] = useState(["off"]);
-  const [joinPopupUser, setJoinPopupUser] = useState([""]);
-  const [teamPlaying, setTeamPlaying] = useState([]);
+  const [game, setGame] = useState(``);
+  const [passcode, setPasscode] = useState(``);
+  const [user, setUser] = useState([]);
+  const [create, setCreate] = useState(false);
 
   useEffect(() => {
-    socket.on("LoggedOn", (offAct) => {
-      let curRoom;
-      let actRoom = [];
-      let logged = false;
-      let onUser = {};
-      let offlineUsers = offAct[0];
-      let onlineUsers = offAct[1];
-
-      ////Set offline users
-      setUsers(offlineUsers);
-      ///check if active user connected
-      Object.keys(onlineUsers).forEach((e) => {
-        if (onlineUsers[e].id === socket.id) {
-          logged = true;
-          setCurrentUser(e);
-          curRoom = onlineUsers[e].room;
-        } else {
-          onUser[e] = onlineUsers[e];
-          actRoom.push(onlineUsers[e].room);
-        }
-      });
-      setOnline(onUser);
-      ////disply or hide depending id logged on
-      if (logged && actRoom.includes(curRoom) && curRoom) {
-        setJoinPage("off");
-      } else if (logged) {
-        setJoinPage("on");
-      } else {
-        setCurrentUser([]);
-        setJoinPage("off");
-      }
-    });
-
-    //Ask user to jin room
-    socket.on("AskToJoinRoom", function (users) {
-      setTeamPlaying(users);
-      setJoinPopupUser(users[0]);
-      ///set window visiable
-      setJoinPopup(`on`);
-      /*////create timeout
-    #####
-    ####
-    ###
-    ##
-    #
-    ##
-    ###
-    ####
-    #####
-    */
-    });
-    ///Refused to join roof
-    socket.on("RequestRefused", (data) => {
-      let user = data[0];
-      let reason = data[1];
-      if (reason === `No`) {
-        console.log(`${user[1]} refused to accept your challenge`);
-        // alert(`${user} refused to accept your challenge`);
-      } else {
-        alert(`No response from ${user}`);
-      }
+    socket.on("UserStatus", (page) => {
+      setUser(page[1]);
+      page[0] === 2 ? setJoinPage(`on`) : setJoinPage(`off`);
     });
   }, []);
 
-  /// logoff user
-  const logCurrentOff = (user) => {
-    socket.emit("LogoutUser", user);
+  ////Handle username text box
+  const handleChange = (e) => {
+    if (e && e.slice(-1) === ` `) {
+      alert(`No spaces allowed`);
+    } else if (e.length > 20) {
+    } else {
+      setGame(e);
+    }
   };
+  ///handle passcode text box
+  const handleChangePasscode = (e) => {
+    if (e && e.slice(-1) === ` `) {
+      alert(`No spaces allowed`);
+    } else if (e.length > 6) {
+    } else {
+      setPasscode(e);
+    }
+  };
+
+  /// Submit button
+  const handleSubmit = (e) => {
+    if (passcode.length < 4) alert(`Passcode must be 4 characters or more!`);
+    else if (game.length < 4) alert(`Game name must be 4 characters or more!`);
+    ///////creat new user
+    else if (create) {
+      let obj = [user, game, passcode];
+      socket.emit("CreateGame", obj, function (res) {
+        if (res === false) alert(`Game name ${game} is already taken`);
+      });
+    }
+    ///login user
+    else {
+      let obj = [user, game, passcode];
+      socket.emit("JoinGame", obj, function (res) {
+        if (res === true) {
+          setGame("");
+          setPasscode("");
+        } else if (res === false) {
+          alert(`Game does not exist`);
+        } else {
+          alert(`Passcode incorrect Please Try Again`);
+        }
+      });
+    }
+  };
+
+  const createUser = () => {
+    setGame("");
+    setPasscode("");
+    setCreate(!create);
+  };
+  /// logoff user
+  // const logCurrentOff = (user) => {
+  //   socket.emit("LogoutUser", user);
+  // };
 
   ////React join page
   return (
-    <div className={`join-sheet-${joinPage}`}>
-      <div className={`join-user-popup-${joinPopup}`}>
-        <h1 className="join-user-popup-heading">{`${joinPopupUser} wants to challeng you to a game of TikTacToe.`}</h1>
-        <p className="join-user-popup-para">Do you accept this challenge?</p>
-        <button
-          className="join-popup-yes"
-          onClick={() => {
-            socket.emit("SetRoom", [teamPlaying, `Yes`]);
-            setJoinPopup(`off`);
-          }}
-        >
-          YES
-        </button>
-        <button
-          className="join-popup-no"
-          onClick={() => {
-            socket.emit("SetRoom", [teamPlaying, `No`]);
-            console.log(`clicked no`);
-            setJoinPopup(`off`);
-          }}
-        >
-          NO
+    <div
+      className={`join-sheet-${joinPage}`}
+      // style={{ display: loginPage ? "visible" : "none" }}
+    >
+      <h1 className="join-welcome">Welcome {user}</h1>
+      <h2 className="join-join">
+        {create ? "Create New Game:" : "Join an Existing game:"}
+      </h2>
+      <button
+        onClick={() => {
+          setGame(`MarksGame`);
+          setPasscode(`1111`);
+        }}
+      >
+        Test Game
+      </button>
+      <div className="game-form">
+        <input
+          placeholder="Game name"
+          value={game}
+          onChange={(e) => handleChange(e.target.value)}
+        />
+      </div>
+      <div>
+        <input
+          placeholder="Passcode"
+          value={passcode}
+          onChange={(e) => handleChangePasscode(e.target.value)}
+        />
+      </div>
+      <div>
+        <button onClick={() => handleSubmit()}>
+          {create ? "Create" : "Submit"}
         </button>
       </div>
-      <h1 className={`join-welcome`}>{`${currentUser}:`}</h1>
-      <p style={{ fontSize: 20 }}>{`select your opponent!`}</p>
-      <div className="container">
-        <div className="box">
-          <u>Offline Users:</u>
-          <OfflineUsers users={users} />
-        </div>
-        <div className="box">
-          <u>Online Users:</u>
-          <OnlineUsers online={online} currentUser={currentUser} />
-        </div>
-        <button
-          onClick={() => logCurrentOff(currentUser)}
-          className="logoff-button"
-        >
-          Log off: {currentUser}
+      <div>
+        <p className="join-join">Or:</p>
+        <button onClick={() => createUser()}>
+          {create ? "Join Existing Game" : "Creat New Game"}
         </button>
       </div>
     </div>

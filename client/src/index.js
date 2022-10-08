@@ -7,14 +7,14 @@ import "./index.css";
 //Import web pages
 import Login from "./login/login";
 import Join from "./join/join";
-import Room from "./room/room";
+import Game from "./game/game";
 
 const ENDPOINT = "http://localhost:4001/";
 export const socket = socketIOClient(ENDPOINT);
 
 ReactDOM.render(
   <React.StrictMode>
-    <Room />
+    <Game />
     <Login />
     <Join />
   </React.StrictMode>,

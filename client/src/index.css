@@ -1,34 +1,30 @@
 body {
   background: url("/src/img/roomBackground.jpg") no-repeat;
+  background-position: left top;
+  animation: backGroundMove 40s infinite linear;
+  animation-direction: alternate;
 }
-input {
+input,
+button {
   border-radius: 25px;
   padding: 5px;
   margin-bottom: 10px;
-  box-shadow: 4px 4px 5px black;
+  box-shadow: 2px -2px 10px black, -2px 2px 10px black;
 }
 
 input:focus {
   padding: 7px;
 }
 
-button {
-  border-radius: 25px;
-  padding: 5px 15px 5px;
-  margin-bottom: 10px;
-  box-shadow: 4px 4px 5px black;
-}
-
 button:hover {
   padding: 5px 17px 5px;
-  background-color: aquamarine;
 }
-/* ol, */
-/* ul {
-  padding-left: 30px;
-  min-width: 150px;
-} */
 
-/* li {
-  padding: 1px;
-} */
+@keyframes backGroundMove {
+  from {
+    background-position: left top;
+  }
+  to {
+    background-position: right top;
+  }
+}

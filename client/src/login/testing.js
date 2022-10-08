@@ -1,6 +1,6 @@
 import React from "react";
 
-export default function UserList(props) {
+export default function Testing(props) {
   const users = [`Grant`, `Mark`, `Simon`, `Leigh`, `Nicole`];
 
   const listUsers = users.map((user) => (

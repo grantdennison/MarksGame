@@ -1,7 +1,8 @@
 // Game defaults
-export const roomData = {
+export const gameData = {
   MarksGame: {
-    users: {},
+    owner: `Grant`,
+    users: [],
     drunk: [],
     killer: [],
     detective: [],

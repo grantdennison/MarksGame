@@ -1,12 +1,14 @@
-import { usersData } from "../userData.js";
+import { usersData } from "../data/userData.js";
 
 //Login users
 export function loginUser(data, socket) {
-  let user = Object.keys(data);
+  let user = data[0];
+  let password = data[1];
+
   if (!(user in usersData)) {
     return false;
   } else if (
-    data[user] === usersData[user].password &&
+    password === usersData[user].password &&
     usersData[user].loginAttempts > 0
   ) {
     usersData[user].loginAttempts = 3;

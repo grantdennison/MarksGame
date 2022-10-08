@@ -41,15 +41,13 @@ export default function Join(props) {
     else if (game.length < 4) alert(`Game name must be 4 characters or more!`);
     ///////creat new user
     else if (create) {
-      let obj = [user, game, passcode];
-      socket.emit("CreateGame", obj, function (res) {
+      socket.emit("CreateGame", [user, game, passcode], function (res) {
         if (res === false) alert(`Game name ${game} is already taken`);
       });
     }
     ///login user
     else {
-      let obj = [user, game, passcode];
-      socket.emit("JoinGame", obj, function (res) {
+      socket.emit("JoinGame", [user, game, passcode], function (res) {
         if (res === true) {
           setGame("");
           setPasscode("");
@@ -62,7 +60,8 @@ export default function Join(props) {
     }
   };
 
-  const createUser = () => {
+  ///Set the create status and empty fileds
+  const createStatus = () => {
     setGame("");
     setPasscode("");
     setCreate(!create);
@@ -111,7 +110,7 @@ export default function Join(props) {
       </div>
       <div>
         <p className="join-join">Or:</p>
-        <button onClick={() => createUser()}>
+        <button onClick={() => createStatus()}>
           {create ? "Join Existing Game" : "Creat New Game"}
         </button>
       </div>

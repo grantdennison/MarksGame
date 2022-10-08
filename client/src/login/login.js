@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import Webcam from "react-webcam";
 import Testing from "./testing.js";
 import "./login.css";
 import { socket } from "../index.js";
@@ -45,15 +46,11 @@ export default function Login(props) {
     else if (name.length < 4) alert(`Username must be 4 characters or more!`);
     ///////creat new user
     else if (create) {
-      let obj = [name, password];
-      socket.emit("CreateUsers", obj, function (res) {
-        if (res === false) alert(`User name ${name} is already taken`);
-      });
+      createUser();
     }
     ///login user
     else {
-      let obj = [name, password];
-      socket.emit("LoginUsers", obj, function (res) {
+      socket.emit("LoginUsers", [name, password], function (res) {
         if (res === true) {
           setName("");
           setPassword("");
@@ -72,6 +69,12 @@ export default function Login(props) {
   };
 
   const createUser = () => {
+    socket.emit("CreateUsers", [name, password], function (res) {
+      if (res === false) alert(`User name ${name} is already taken`);
+    });
+  };
+
+  const createStatus = () => {
     setName("");
     setPassword("");
     setCreate(!create);
@@ -110,7 +113,7 @@ export default function Login(props) {
       </div>
       <div>
         <p className="login-login">Or:</p>
-        <button onClick={() => createUser()}>
+        <button onClick={() => createStatus()}>
           {create ? "Existing user login" : "Creat new User"}
         </button>
       </div>

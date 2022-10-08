@@ -46,7 +46,9 @@ export default function Login(props) {
     else if (name.length < 4) alert(`Username must be 4 characters or more!`);
     ///////creat new user
     else if (create) {
-      createUser();
+      socket.emit("CreateUsers", [name, password], function (res) {
+        if (res === false) alert(`User name ${name} is already taken`);
+      });
     }
     ///login user
     else {
@@ -66,12 +68,6 @@ export default function Login(props) {
         }
       });
     }
-  };
-
-  const createUser = () => {
-    socket.emit("CreateUsers", [name, password], function (res) {
-      if (res === false) alert(`User name ${name} is already taken`);
-    });
   };
 
   const createStatus = () => {

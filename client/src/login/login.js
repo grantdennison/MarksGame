@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import Webcam from "react-webcam";
 import Testing from "./testing.js";
 import "./login.css";
 import { socket } from "../index.js";
@@ -11,9 +10,8 @@ export default function Login(props) {
   const [loginPage, setLoginPage] = useState("on");
 
   useEffect(() => {
-    socket.on("UserStatus", (page) => {
-      console.log(`Page = ${page}`);
-      page[0] === 1 ? setLoginPage("on") : setLoginPage("off");
+    socket.on("UserStatus", (data) => {
+      data[0] === 1 ? setLoginPage("on") : setLoginPage("off");
     });
   }, []);
 

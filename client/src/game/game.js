@@ -8,8 +8,9 @@ export default function Game(props) {
   const [gamePage, setGamePage] = useState("off");
 
   useEffect(() => {
-    socket.on("UserStatus", (page) => {
-      page === 3 ? setGamePage(`on`) : setGamePage(`off`);
+    socket.on("UserStatus", (data) => {
+      setUser(data[1]);
+      data[0] === 4 ? setGamePage(`on`) : setGamePage(`off`);
     });
   }, []);
 

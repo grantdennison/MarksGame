@@ -1,0 +1,86 @@
+.camera-sheet-on {
+  font-size: min(8vw, 30px);
+  font-weight: bold;
+  text-align: center;
+
+  margin: -10px;
+  position: fixed;
+  height: 101%;
+  width: 101%;
+  background-color: rgba(0, 0, 0, 0.9);
+  z-index: 1;
+  color: white;
+}
+.camera-sheet-off {
+  display: none;
+}
+.camera-heading {
+  font-family: "Brush Script MT";
+  font-weight: 200;
+  text-shadow: 2px 2px 4px rgb(78, 74, 74), 3px 3px 4px rgb(226, 221, 221);
+}
+.camera-welcome {
+  font-size: min(5.5vw, 30px);
+  font-family: "Brush Script MT";
+  font-weight: 200;
+  text-shadow: 2px 2px 4px rgb(78, 74, 74), 3px 3px 4px rgb(226, 221, 221);
+}
+
+.camera-module {
+  align-items: center;
+  width: 300px;
+  height: 300px;
+  border-radius: 50%;
+}
+.camera-module1 {
+  background-color: rgb(72, 66, 66);
+
+  align-items: centre;
+  width: 300px;
+  height: 300px;
+  border-radius: 50%;
+}
+
+.button-camera,
+.button-capture,
+.button-reset,
+.button-file,
+.button-submit {
+  cursor: pointer;
+  border: none;
+  border-radius: 50%;
+  background-size: 70%;
+  background-color: rgb(135, 132, 148);
+  background-repeat: no-repeat;
+  width: 50px;
+  height: 50px;
+  background-position: center;
+}
+
+.button-camera {
+  background-image: url("../img/camera.png");
+  position: relative;
+  right: 50px;
+  bottom: 70px;
+}
+.button-capture {
+  background-image: url("../img/capture.png");
+  position: relative;
+  right: 35px;
+  bottom: 15px;
+}
+.button-reset {
+  background-image: url("../img/reset.png");
+}
+.button-file {
+  background-image: url("../img/file.png");
+  position: relative;
+  left: 35px;
+  bottom: 15px;
+}
+.button-submit {
+  background-image: url("../img/submit.png");
+  position: relative;
+  left: 50px;
+  bottom: 70px;
+}

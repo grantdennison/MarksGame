@@ -10,9 +10,9 @@ export default function Join(props) {
   const [create, setCreate] = useState(false);
 
   useEffect(() => {
-    socket.on("UserStatus", (page) => {
-      setUser(page[1]);
-      page[0] === 2 ? setJoinPage(`on`) : setJoinPage(`off`);
+    socket.on("UserStatus", (data) => {
+      setUser(data[1]);
+      data[0] === 3 ? setJoinPage(`on`) : setJoinPage(`off`);
     });
   }, []);
 

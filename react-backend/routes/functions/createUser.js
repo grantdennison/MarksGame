@@ -12,7 +12,8 @@ export function createUser(data, socket) {
     password: password,
     loginAttempts: 3,
     game: false,
-    socket: socket
+    socket: socket,
+    photo: false
   };
   return true;
 }

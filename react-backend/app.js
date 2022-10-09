@@ -9,6 +9,7 @@ import { createUser } from "./routes/functions/createUser.js";
 import { userStatus } from "./routes/functions/userStatus.js";
 import { joinGame } from "./routes/functions/joinGame.js";
 import { createGame } from "./routes/functions/createGame.js";
+import savePhoto from "./routes/functions/savePhoto.js";
 
 const port = process.env.PORT || 4001;
 const app = express();
@@ -56,6 +57,13 @@ io.on("connection", (socket) => {
   ///Creat new Game and login
   socket.on("CreateGame", function (data, callback) {
     let res = createGame(data, socket);
+    if (res) updateUser(data, socket);
+    callback(res);
+  });
+
+  //Save photo to user Data
+  socket.on("SubmitPhoto", function (data, callback) {
+    let res = savePhoto(data, socket);
     if (res) updateUser(data, socket);
     callback(res);
   });

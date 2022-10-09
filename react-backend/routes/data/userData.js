@@ -6,7 +6,8 @@ export const usersData = {
     password: "1111",
     loginAttempts: 3,
     game: false,
-    socket: ``
+    socket: ``,
+    photo: false
   },
   Nicole: {
     id: ``,
@@ -14,7 +15,8 @@ export const usersData = {
     password: "1111",
     loginAttempts: 3,
     game: false,
-    socket: ``
+    socket: ``,
+    photo: false
   },
   Simon: {
     id: ``,
@@ -22,7 +24,8 @@ export const usersData = {
     password: "1111",
     loginAttempts: 3,
     game: false,
-    socket: ``
+    socket: ``,
+    photo: false
   },
   Leigh: {
     id: ``,
@@ -30,7 +33,8 @@ export const usersData = {
     password: "1111",
     loginAttempts: 3,
     game: false,
-    socket: ``
+    socket: ``,
+    photo: false
   },
   Mark: {
     id: ``,
@@ -38,6 +42,7 @@ export const usersData = {
     password: "1111",
     loginAttempts: 3,
     game: false,
-    socket: ``
+    socket: ``,
+    photo: false
   }
 };

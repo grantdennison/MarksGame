@@ -8,10 +8,13 @@ export default function Join(props) {
   const [passcode, setPasscode] = useState(``);
   const [user, setUser] = useState([]);
   const [create, setCreate] = useState(false);
+  const [userPhoto, setUserPhoto] = useState(null);
 
   useEffect(() => {
     socket.on("UserStatus", (data) => {
+      //data[0] = page data[1] = user data[2] = photo
       setUser(data[1]);
+      setUserPhoto(data[2]);
       data[0] === 3 ? setJoinPage(`on`) : setJoinPage(`off`);
     });
   }, []);
@@ -77,7 +80,10 @@ export default function Join(props) {
       className={`join-sheet-${joinPage}`}
       // style={{ display: loginPage ? "visible" : "none" }}
     >
-      <h1 className="join-welcome">Welcome {user}</h1>
+      <div className="join-photo-container">
+        <img className="join-photo" src={userPhoto} alt="userPhoto"></img>
+        <h1 className="join-text">{user}</h1>
+      </div>
       <h2 className="join-join">
         {create ? "Create New Game:" : "Join an Existing game:"}
       </h2>

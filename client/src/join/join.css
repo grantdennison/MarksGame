@@ -7,9 +7,27 @@
 .join-sheet-off {
   display: none;
 }
-.join-welcome {
-  font-family: "Brush Script MT";
-  font-weight: 200;
+.join-photo-container {
+  position: relative;
+  text-align: center;
+  color: azure;
+}
+
+.join-photo {
+  width: 200px;
+  height: 200px;
+  border-radius: 50%;
+}
+.join-text {
+  position: absolute;
+  font-size: 35px;
+  border-radius: 35px;
+  padding-left: 5px;
+  padding-right: 5px;
+  background-color: rgba(4, 3, 3, 0.688);
+  top: 80%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 }
 
 .join-join {

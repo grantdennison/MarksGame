@@ -1,4 +1,5 @@
 import { usersData } from "../data/userData.js";
+import { gameData } from "../data/gameData.js";
 /// check user status
 
 export function userStatus(data) {
@@ -7,5 +8,5 @@ export function userStatus(data) {
   else if (usersData[user].photo === false) return [2, user]; // Camera Page
   else if (usersData[user].game === false)
     return [3, user, usersData[user].photo]; // Join Page
-  else return [4, user, usersData[user].photo]; // Game page
+  else return [4, usersData[user].game]; // Game page
 }

@@ -1,20 +1,56 @@
 .game-sheet-on {
-  font-size: 20px;
-  font-weight: bold;
+  font-size: min(7vw, 35px);
   text-align: center;
+  text-shadow: 0px 0px 3px rgb(56, 54, 54), 0px 0px 4px rgb(226, 221, 221);
 }
 .game-sheet-off {
   display: none;
 }
-.game-welcome {
-  font-size: 11vw;
-  font-weight: 400;
+h1 {
+  font-weight: 100;
   font-family: "Brush Script MT";
-  margin-bottom: 5px;
 }
 
-.game-login {
-  margin-bottom: 5px;
-  font-size: 5.5vw;
+span {
+  font-size: min(5.5vw, 20px);
   font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif;
+}
+
+.photos-layout {
+  background-color: rgba(0, 0, 0, 0.835);
+  display: flex;
+  align-content: flex-start;
+  justify-content: space-around;
+  flex-wrap: wrap;
+  flex-direction: row;
+  height: 82vh;
+  width: 95vw;
+  border: 3px solid black;
+}
+
+.photo-container {
+  position: relative;
+  text-align: center;
+  color: azure;
+  height: 70px;
+  width: 70px;
+  padding: 5px;
+}
+
+.photo {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+}
+.photo-text {
+  position: absolute;
+  font-size: 20px;
+  border-radius: 35px;
+  padding-left: 5px;
+  padding-right: 5px;
+  font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif;
+  background-color: rgba(4, 3, 3, 0.688);
+  top: 70%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 }

@@ -2,7 +2,7 @@
 export const gameData = {
   MarksGame: {
     owner: `Grant`,
-    users: [],
+    users: {},
     drunk: [],
     killer: [],
     detective: [],

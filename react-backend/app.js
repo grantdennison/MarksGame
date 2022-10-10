@@ -10,6 +10,8 @@ import { userStatus } from "./routes/functions/userStatus.js";
 import { joinGame } from "./routes/functions/joinGame.js";
 import { createGame } from "./routes/functions/createGame.js";
 import savePhoto from "./routes/functions/savePhoto.js";
+import { gameData } from "./routes/data/gameData.js";
+import { usersData } from "./routes/data/userData.js";
 
 const port = process.env.PORT || 4001;
 const app = express();
@@ -24,7 +26,7 @@ const io = new Server(server, {
   }
 });
 
-/// Send all logged on users
+/// Send page status to user
 const updateUser = (data, socket) =>
   socket.emit("UserStatus", userStatus(data));
 
@@ -38,6 +40,13 @@ io.on("connection", (socket) => {
   socket.on("LoginUsers", function (data, callback) {
     let res = loginUser(data, socket);
     if (res) updateUser(data, socket);
+    if (usersData[data[0]].game) {
+      io.to(usersData[data[0]].game).emit("GameUsers", [
+        usersData[data[0]].game,
+        gameData[usersData[data[0]].game].owner,
+        gameData[usersData[data[0]].game].users
+      ]);
+    }
     callback(res);
   });
   ///Creat new user and login
@@ -49,15 +58,31 @@ io.on("connection", (socket) => {
 
   /// Check passcode and join game
   socket.on("JoinGame", function (data, callback) {
+    //let user = data[0];
+    let game = data[1];
     let res = joinGame(data, socket);
-    if (res) updateUser(data, socket);
+    if (res) {
+      updateUser(data, socket);
+      io.to(game).emit("GameUsers", [
+        game,
+        gameData[game].owner,
+        gameData[game].users
+      ]);
+    }
     callback(res);
   });
 
-  ///Creat new Game and login
+  ///Creat new Game && join
   socket.on("CreateGame", function (data, callback) {
     let res = createGame(data, socket);
-    if (res) updateUser(data, socket);
+    if (res) {
+      updateUser(data, socket);
+      io.to(game).emit("GameUsers", [
+        game,
+        gameData[game].owner,
+        gameData[game].users
+      ]);
+    }
     callback(res);
   });
 

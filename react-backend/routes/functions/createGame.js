@@ -11,7 +11,7 @@ export function createGame(data, socket) {
   usersData[user].game = game;
   gameData[game] = {
     owner: user,
-    users: [],
+    users: {},
     drunk: [],
     killer: [],
     detective: [],
@@ -21,5 +21,7 @@ export function createGame(data, socket) {
     active: false,
     passcode: passcode
   };
+  gameData[game].users[user] = usersData[user].photo;
+  socket.join(game);
   return true;
 }

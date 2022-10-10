@@ -9,7 +9,7 @@ export function joinGame(data, socket) {
   if (!(game in gameData)) return false; //game does not exist;
   else {
     if (passcode === gameData[game].passcode) {
-      gameData[game].users.push(user);
+      gameData[game].users[user] = usersData[user].photo;
       usersData[user].game = game;
       socket.join(game);
       return true;

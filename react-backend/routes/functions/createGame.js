@@ -2,7 +2,7 @@ import { usersData } from "../data/userData.js";
 import { gameData } from "../data/gameData.js";
 
 //Creat game, set owner and join
-export function createGame(data, socket) {
+export default function createGame(data, socket) {
   let user = data[0];
   let game = data[1];
   let passcode = data[2];

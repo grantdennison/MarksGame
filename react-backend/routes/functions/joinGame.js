@@ -2,7 +2,7 @@ import { gameData } from "../data/gameData.js";
 import { usersData } from "../data/userData.js";
 ///Check if room exists then join the room
 
-export function joinGame(data, socket) {
+export default function joinGame(data, socket) {
   let user = data[0];
   let game = data[1];
   let passcode = data[2];

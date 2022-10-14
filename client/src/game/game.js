@@ -20,7 +20,7 @@ export default function Game(props) {
       data[0] === 4 ? setGamePage(`on`) : setGamePage(`off`);
     });
     /// Set game data
-    socket.on("GameUsers", (data) => {
+    socket.on("GameStatus", (data) => {
       //data[0] = game data[1] = owner data[2] = userphotos
       setGame(data[0]);
       setOwner(data[1]);

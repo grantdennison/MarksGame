@@ -1,34 +1,22 @@
-import express from "express";
-import { createServer } from "http";
-import { Server } from "socket.io";
+import { io } from "./index.js";
 
 //routes
-import index from "./routes/index.js";
-import { loginUser } from "./routes/functions/loginUser.js";
-import { createUser } from "./routes/functions/createUser.js";
-import { userStatus } from "./routes/functions/userStatus.js";
-import { joinGame } from "./routes/functions/joinGame.js";
-import { createGame } from "./routes/functions/createGame.js";
+import loginUser from "./routes/functions/loginUser.js";
+import createUser from "./routes/functions/createUser.js";
+import userStatus from "./routes/functions/userStatus.js";
+import joinGame from "./routes/functions/joinGame.js";
+import createGame from "./routes/functions/createGame.js";
 import savePhoto from "./routes/functions/savePhoto.js";
-import { gameData } from "./routes/data/gameData.js";
-import { usersData } from "./routes/data/userData.js";
-
-const port = process.env.PORT || 4001;
-const app = express();
-// const cors = require("cors"); // not required by the look of it
-app.use(index);
-const server = createServer(app);
-
-const io = new Server(server, {
-  cors: {
-    origin: "http://localhost:3000",
-    methods: ["GET", "POST"]
-  }
-});
+import gameStatus from "./routes/functions/gameStatus.js";
 
 /// Send page status to user
 const updateUser = (data, socket) =>
   socket.emit("UserStatus", userStatus(data));
+
+/// Send photos all users in game
+const updateGame = (game) => {
+  io.to(game).emit("GameStatus", gameStatus(game));
+};
 
 io.on("connection", (socket) => {
   console.log(`New client connected`);
@@ -38,14 +26,11 @@ io.on("connection", (socket) => {
 
   /// CHeck password and login
   socket.on("LoginUsers", function (data, callback) {
+    let page;
     let res = loginUser(data, socket);
-    if (res) updateUser(data, socket);
-    if (usersData[data[0]].game) {
-      io.to(usersData[data[0]].game).emit("GameUsers", [
-        usersData[data[0]].game,
-        gameData[usersData[data[0]].game].owner,
-        gameData[usersData[data[0]].game].users
-      ]);
+    if (res) page = updateUser(data, socket);
+    if (page[0] === 4) {
+      updateGame(page[1]);
     }
     callback(res);
   });
@@ -63,25 +48,18 @@ io.on("connection", (socket) => {
     let res = joinGame(data, socket);
     if (res) {
       updateUser(data, socket);
-      io.to(game).emit("GameUsers", [
-        game,
-        gameData[game].owner,
-        gameData[game].users
-      ]);
+      updateGame(game);
     }
     callback(res);
   });
 
   ///Creat new Game && join
   socket.on("CreateGame", function (data, callback) {
+    let game = data[1];
     let res = createGame(data, socket);
     if (res) {
       updateUser(data, socket);
-      io.to(game).emit("GameUsers", [
-        game,
-        gameData[game].owner,
-        gameData[game].users
-      ]);
+      updateGame(game);
     }
     callback(res);
   });
@@ -96,9 +74,7 @@ io.on("connection", (socket) => {
   //User disconnected
   socket.on("disconnect", () => {
     // SocketClosed(socket.id);
-    console.log(`Client disconnected ${port}`);
+    console.log(`Client disconnected`);
     // clearInterval(interval);
   });
 });
-
-server.listen(port, () => console.log(`Listening on port ${port}`));

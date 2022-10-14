@@ -1,7 +1,7 @@
 import { usersData } from "../data/userData.js";
 
 //Login users
-export function loginUser(data, socket) {
+export default function loginUser(data, socket) {
   let user = data[0];
   let password = data[1];
 

@@ -25,7 +25,7 @@ io.on("connection", (socket) => {
   // console.log(socket.id); //socket id
 
   /// CHeck password and login
-  socket.on("LoginUsers", function (data, callback) {
+  socket.on("LoginUsers", (data, callback) => {
     let page;
     let res = loginUser(data, socket);
     if (res) page = updateUser(data, socket);
@@ -35,14 +35,15 @@ io.on("connection", (socket) => {
     callback(res);
   });
   ///Creat new user and login
-  socket.on("CreateUsers", function (data, callback) {
-    let res = createUser(data, socket);
-    if (res) updateUser(data, socket);
+  socket.on("CreateUsers", async (data, callback) => {
+    let res = await createUser(data, socket);
+    console.log(res);
+    if (res === true) updateUser(data, socket);
     callback(res);
   });
 
   /// Check passcode and join game
-  socket.on("JoinGame", function (data, callback) {
+  socket.on("JoinGame", (data, callback) => {
     //let user = data[0];
     let game = data[1];
     let res = joinGame(data, socket);
@@ -54,7 +55,7 @@ io.on("connection", (socket) => {
   });
 
   ///Creat new Game && join
-  socket.on("CreateGame", function (data, callback) {
+  socket.on("CreateGame", (data, callback) => {
     let game = data[1];
     let res = createGame(data, socket);
     if (res) {

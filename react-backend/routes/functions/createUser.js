@@ -1,25 +1,50 @@
 // create and login user
 import { usersData } from "../data/userData.js";
-import { UserDataBase } from "../../index.js";
+import { UserData } from "../../index.js";
 
-export default function createUser(data, socket) {
+export default async function createUser(data, socket) {
+  //check user exists
+
   if (data[0] in usersData) return false;
-  let user = data[0];
-  let password = data[1];
 
-  new UserDataBase({
-    userData: 555
-  }).save();
+  // create new user
+  let user = data[0],
+    password = data[1],
+    passed = false;
+  console.log("type", typeof socket);
 
-  usersData[user] = {
-    id: socket.id,
+  const creatUser = new UserData({
+    user: user,
+    socketId: socket.id,
     active: true,
     password: password,
     loginAttempts: 3,
     game: false,
-    socket: socket,
+    // socket: socket,
     photo: false
-  };
+  });
 
-  return true;
+  await creatUser
+    .save()
+    .then(() => {
+      usersData[user] = {
+        id: socket.id,
+        active: true,
+        password: password,
+        loginAttempts: 3,
+        game: false,
+        socket: socket,
+        photo: false
+      };
+      passed = true;
+      console.log(`Successlly saved`);
+    })
+    .catch((err) => {
+      // console.log(err);
+      console.log(`Failed to save`);
+      passed = false;
+    });
+  console.log(`Last message`);
+  console.log(passed);
+  return passed;
 }

@@ -30,19 +30,26 @@ export const io = new Server(server, {
 server.listen(port, () => console.log(`Listening on port ${port}`));
 
 ///MongoDB setup
-const mongoDB = `mongodb+srv://grantdennison:q1w2e3r4t5y6@gamingcluster.cfwr0o3.mongodb.net/game-database?retryWrites=true&w=majority`;
+const mongoDB = `mongodb+srv://grantdennison:q1w2e3r4t5y6@gamingcluster.cfwr0o3.mongodb.net/marks-Game?retryWrites=true&w=majority`;
+
 mongoose
-  .connect(mongoDB)
+  .connect(mongoDB, { useNewUrlParser: true, useUnifiedTopology: true })
   .then(() => {
     console.log(`connected node`);
   })
   .catch((err) => console.log(err));
 
-const msgSchema = new mongoose.Schema({
-  userData: {
-    type: String,
-    require: true
-  }
+const Schema = mongoose.Schema;
+
+const usersDataSchema = new Schema({
+  user: String,
+  socketId: String,
+  active: Boolean,
+  password: String,
+  loginAttempts: Number,
+  game: {},
+  socket: {},
+  photo: {}
 });
 
-export const UserDataBase = mongoose.model(`user`, msgSchema);
+export const UserData = mongoose.model(`users`, usersDataSchema);

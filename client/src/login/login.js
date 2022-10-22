@@ -45,7 +45,7 @@ export default function Login(props) {
     ///////creat new user
     else if (create) {
       socket.emit("CreateUsers", [name, password], function (res) {
-        if (res === false) alert(`User name ${name} is already taken`);
+        if (res !== true) alert(`User name ${name} is already taken`);
       });
     }
     ///login user
@@ -84,7 +84,11 @@ export default function Login(props) {
         {create ? "Create New Account:" : "Please login:"}
       </h2>
       {/* testing only delete */}
-      <Testing setName={setName} setPassword={setPassword} />
+      <Testing
+        setName={setName}
+        setPassword={setPassword}
+        setCreate={setCreate}
+      />
 
       <div className="login-form">
         <input

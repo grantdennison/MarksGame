@@ -4,14 +4,13 @@ import { UserData } from "../../index.js";
 
 export default async function createUser(data, socket) {
   //check user exists
+  let passed = await UserData.find({ user: data[0] }).count();
 
-  if (data[0] in usersData) return false;
-
+  // if (data[0] in usersData) return false;
+  if (passed >= 1) return false;
   // create new user
   let user = data[0],
-    password = data[1],
-    passed = false;
-  console.log("type", typeof socket);
+    password = data[1];
 
   const creatUser = new UserData({
     user: user,
@@ -42,7 +41,7 @@ export default async function createUser(data, socket) {
     .catch((err) => {
       // console.log(err);
       console.log(`Failed to save`);
-      passed = false;
+      passed = 0;
     });
   console.log(`Last message`);
   console.log(passed);

@@ -45,7 +45,9 @@ export default function Login(props) {
     ///////creat new user
     else if (create) {
       socket.emit("CreateUsers", [name, password], function (res) {
-        if (res !== true) alert(`User name ${name} is already taken`);
+        if (res === false) alert(`User name ${name} is already taken`);
+        else if (res === 0)
+          alert(`Failed to save, server error please try again`);
       });
     }
     ///login user

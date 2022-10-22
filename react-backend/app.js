@@ -37,7 +37,6 @@ io.on("connection", (socket) => {
   ///Creat new user and login
   socket.on("CreateUsers", async (data, callback) => {
     let res = await createUser(data, socket);
-    console.log(res);
     if (res === true) updateUser(data, socket);
     callback(res);
   });

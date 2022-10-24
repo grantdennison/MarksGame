@@ -42,10 +42,10 @@ mongoose
 const Schema = mongoose.Schema;
 
 const usersDataSchema = new Schema({
-  user: String,
+  user: { type: String, required: true, index: { unique: true } },
   socketId: String,
   active: Boolean,
-  password: String,
+  password: { type: String, required: true },
   loginAttempts: Number,
   game: {},
   socket: {},

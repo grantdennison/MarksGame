@@ -1,6 +1,7 @@
 // create and login user
 import { usersData } from "../data/userData.js";
 import { UserData } from "../../index.js";
+import { hashPassword } from "./password.js";
 
 export default async function createUser(data, socket) {
   //check user exists
@@ -9,8 +10,8 @@ export default async function createUser(data, socket) {
   // if (data[0] in usersData) return false;
   if (passed >= 1) return false;
   // create new user
-  let user = data[0],
-    password = data[1];
+  let user = data[0];
+  let password = await hashPassword(data[1]);
 
   const creatUser = new UserData({
     user: user,

@@ -25,12 +25,14 @@ io.on("connection", (socket) => {
   // console.log(socket.id); //socket id
 
   /// CHeck password and login
-  socket.on("LoginUsers", (data, callback) => {
+  socket.on("LoginUsers", async (data, callback) => {
     let page;
-    let res = loginUser(data, socket);
-    if (res) page = updateUser(data, socket);
-    if (page[0] === 4) {
-      updateGame(page[1]);
+    let res = await loginUser(data, socket);
+    if (res === true) {
+      page = updateUser(data, socket);
+      if (page[0] === 4) {
+        updateGame(page[1]);
+      }
     }
     callback(res);
   });

@@ -23,7 +23,7 @@ export default function Testing(props) {
         key={"createUserTest"}
         onClick={() => {
           props.setName(
-            `User Test ${(Math.random() + 1).toString().substring(3, 7)}`
+            `User${(Math.random() + 1).toString().substring(3, 7)}`
           );
           props.setPassword(`1111`);
           props.setCreate(true);

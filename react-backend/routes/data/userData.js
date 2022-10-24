@@ -7,7 +7,7 @@ export const usersData = {
     loginAttempts: 3,
     game: false,
     socket: ``,
-    photo: false
+    photo: "client/src/img/avitar.png"
   },
   Nicole: {
     id: ``,

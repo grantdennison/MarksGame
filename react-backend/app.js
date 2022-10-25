@@ -59,7 +59,7 @@ io.on("connection", (socket) => {
   socket.on("CreateGame", (data, callback) => {
     let game = data[1];
     let res = createGame(data, socket);
-    if (res) {
+    if (res === true) {
       updateUser(data, socket);
       updateGame(game);
     }

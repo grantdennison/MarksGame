@@ -48,6 +48,8 @@ export default function Login(props) {
         if (res === false) alert(`User name ${name} is already taken`);
         else if (res === 0)
           alert(`Failed to save, server error please try again`);
+        else if (res === -1)
+          alert(`Failed to confirm is user name is avalible`);
       });
     }
     ///login user

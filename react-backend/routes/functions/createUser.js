@@ -8,11 +8,13 @@ export default async function createUser(data, socket) {
   let passed = await UserData.find({ user: data[0] })
     .count()
     .catch((err) => {
-      return 0;
+      passed = -1;
     });
 
   // if (data[0] in usersData) return false;
   if (passed >= 1) return false;
+  if (passed === -1) return passed; // failed to save
+
   // create new user
   let user = data[0];
   let password = await hashPassword(data[1]);

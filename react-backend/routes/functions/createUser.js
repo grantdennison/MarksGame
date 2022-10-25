@@ -21,7 +21,7 @@ export default async function createUser(data, socket) {
     loginAttempts: 3,
     game: false,
     // socket: socket,
-    photo: false
+    photo: ""
   });
 
   await creatUser
@@ -34,7 +34,7 @@ export default async function createUser(data, socket) {
         loginAttempts: 3,
         game: false,
         socket: socket,
-        photo: false
+        photo: ""
       };
       passed = true;
       console.log(`Successlly saved`);

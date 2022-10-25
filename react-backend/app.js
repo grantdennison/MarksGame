@@ -67,8 +67,8 @@ io.on("connection", (socket) => {
   });
 
   //Save photo to user Data
-  socket.on("SubmitPhoto", function (data, callback) {
-    let res = savePhoto(data, socket);
+  socket.on("SubmitPhoto", async function (data, callback) {
+    let res = await savePhoto(data, socket);
     if (res) updateUser(data, socket);
     callback(res);
   });

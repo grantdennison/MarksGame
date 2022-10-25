@@ -5,10 +5,12 @@ import { UserData } from "../../index.js";
 export default async function savePhoto(data, socket) {
   let user = data[0];
   let url = data[1];
-  console.log(
-    `phototest`,
-    await UserData.updateOne({ user: user }, { $set: { photo: url } })
-  );
-  usersData[user].photo = url;
-  return true;
+  await UserData.updateOne({ user: user }, { $set: { photo: url } })
+    .then(() => {
+      usersData[user].photo = url;
+      return true;
+    })
+    .catch((err) => {
+      return false;
+    });
 }

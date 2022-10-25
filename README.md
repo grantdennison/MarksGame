@@ -1,6 +1,8 @@
-# react-express
+# react-express-sockets.io-node.js-mongoDb
 
-React frontend and express backend
-To play open two terminals cd client then npm start cd react-backend then npm start
+Then also using bycrypt, nodemon, cors, react-webcam.
 
-Create an account or use default players Open separate windows and enjoy.
+
+Game in development. Bringing automation convenience to board-games so everyone can join in and no need for moderator.
+
+Also speeds up the voting and instructions so more time enjoying the game.

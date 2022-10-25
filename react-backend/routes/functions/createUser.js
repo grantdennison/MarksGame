@@ -13,7 +13,7 @@ export default async function createUser(data, socket) {
 
   // if (data[0] in usersData) return false;
   if (passed >= 1) return false;
-  if (passed === -1) return passed; // failed to save
+  if (passed === -1) return passed; // failed to check user exists
 
   // create new user
   let user = data[0];

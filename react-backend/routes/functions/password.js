@@ -5,27 +5,7 @@ export async function hashPassword(password) {
   return hashPwd;
 }
 
-export function matchPassword(password) {
-  UserSchema.pre("save", function (next) {
-    const user = this;
-
-    if (this.isModified("password") || this.isNew) {
-      bcrypt.genSalt(10, function (saltError, salt) {
-        if (saltError) {
-          return next(saltError);
-        } else {
-          bcrypt.hash(user.password, salt, function (hashError, hash) {
-            if (hashError) {
-              return next(hashError);
-            }
-
-            user.password = hash;
-            next();
-          });
-        }
-      });
-    } else {
-      return next();
-    }
-  });
+export async function matchPassword(hashPwd, password) {
+  const match = await bcrypt.compare(password, hashPwd);
+  return match;
 }

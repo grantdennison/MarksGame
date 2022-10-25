@@ -60,6 +60,8 @@ export default function Login(props) {
           setPassword("");
         } else if (res === false) {
           alert(`User does not exist`);
+        } else if (res === -1) {
+          alert(`Unable to connect to DataBase please try again`);
         } else {
           alert(
             res <= 0

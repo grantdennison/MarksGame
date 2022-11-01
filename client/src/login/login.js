@@ -8,6 +8,7 @@ export default function Login(props) {
   const [password, setPassword] = useState("");
   const [create, setCreate] = useState(false);
   const [loginPage, setLoginPage] = useState("on");
+  socket.emit(`Register`, localStorage.getItem(`userdata_id`));
 
   useEffect(() => {
     socket.on("UserStatus", (data) => {
@@ -40,12 +41,17 @@ export default function Login(props) {
 
   /// Submit button
   const handleSubmit = (e) => {
+    // var userId = [Math.random().toString(36).substring(3, 16), Date.now()];
     if (password.length < 4) alert(`Password must be 4 characters or more!`);
     else if (name.length < 4) alert(`Username must be 4 characters or more!`);
     ///////creat new user
     else if (create) {
       socket.emit("CreateUsers", [name, password], function (res) {
-        if (res === false) alert(`User name ${name} is already taken`);
+        if (res === true) {
+          setName("");
+          setPassword("");
+          // localStorage.setItem(`userData_id`, userId);   ////local storage
+        } else if (res === false) alert(`User name ${name} is already taken`);
         else if (res === 0)
           alert(`Failed to save, server error please try again`);
         else if (res === -1)
@@ -58,6 +64,7 @@ export default function Login(props) {
         if (res === true) {
           setName("");
           setPassword("");
+          // localStorage.setItem(`userData_id`, userId);  ////local storage
         } else if (res === false) {
           alert(`User does not exist`);
         } else if (res === -1) {

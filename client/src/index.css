@@ -1,8 +1,10 @@
-body {
+html {
   background: url("/src/img/roomBackground.jpg") no-repeat;
   background-position: left top;
   animation: backGroundMove 40s infinite linear;
   animation-direction: alternate;
+  background-size: cover;
+  height: 100vh;
 }
 input,
 button {

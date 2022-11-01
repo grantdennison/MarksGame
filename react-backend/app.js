@@ -19,6 +19,8 @@ const updateGame = (game) => {
 };
 
 io.on("connection", (socket) => {
+  // socket.on(`Register`, async (rtnUser) => {});
+
   console.log(`New client connected`);
   // socket.join("Marks room"); //specify room
   // console.log(socket.rooms);

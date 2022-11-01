@@ -5,10 +5,11 @@ import { hashPassword } from "./password.js";
 
 export default async function createUser(data, socket) {
   //check user exists
+
   let passed = await UserData.find({ user: data[0] })
     .count()
     .catch((err) => {
-      passed = -1;
+      return -1;
     });
 
   // if (data[0] in usersData) return false;
